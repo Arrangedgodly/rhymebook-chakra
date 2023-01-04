@@ -2,6 +2,7 @@
 @import url('./App.css');
 @import url('./blocks/Welcome.css');
 @import url('./blocks/Form.css');
+@import url('./blocks/Loading.css');
 
 body {
   margin: 0;

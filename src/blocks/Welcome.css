@@ -2,13 +2,17 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  row-gap: 2vh;
+  row-gap: 10vh;
 }
 
 .Welcome-header {
   font-size: 3vw;
+}
+
+.Welcome-text {
+  font-size: 1.5vw;
 }
 
 .Welcome-subtext {
