@@ -1,0 +1,11 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  margin: auto;
+}
+
+.Form-title {
+  font-size: 2vw;
+  margin-top: 5vh;
+}
