@@ -1,8 +1,11 @@
+import Header from "./components/Header";
 import Welcome from "./components/Welcome";
 import NewUser from "./components/NewUser";
 import Login from "./components/Login";
 import Loading from "./components/Loading";
+import Rhymebook from "./components/Rhymebook";
 import { useState, useEffect } from "react";
+import { login, checkAuth } from './utils/api';
 
 function App() {
   const [activePage, setActivePage] = useState("welcome");
@@ -20,11 +23,54 @@ function App() {
     setActivePage("login");
   };
 
+  const handleLogin = (email, password) => {
+    login(email, password)
+      .then(res => {
+        localStorage.setItem("jwt", res.token);
+        handleAuth();
+      })
+      .catch(err => console.log(err))
+  };
+
+  const handleAuth = () => {
+    setIsLoading(true);
+    checkAuth(localStorage.getItem('jwt'))
+      .then(user => {
+        if (user) {
+          setLoggedIn(true);
+          setCurrentUser(user);
+          setActivePage('rhymebook');
+        } else {
+          setLoggedIn(false);
+          setCurrentUser({});
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
+  const handleLogout = () => {
+    setIsLoading(true);
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setCurrentUser({});
+    setActivePage('welcome');
+  }
+
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 250)
   }, [isLoading])
 
+  useEffect(() => {
+    handleAuth()
+  }, [])
+
   return (
+    <>
+    <Header 
+      loggedIn={loggedIn}
+      currentUser={currentUser}
+      handleLogout={handleLogout}
+    />
     <div className="App">
       {isLoading && <Loading />}
       {activePage === "welcome" && (
@@ -34,8 +80,10 @@ function App() {
         />
       )}
       {activePage === "newuser" && <NewUser />}
-      {activePage === "login" && <Login />}
+      {activePage === "login" && <Login handleLogin={handleLogin}/>}
+      {activePage === 'rhymebook' && <Rhymebook />}
     </div>
+    </>
   );
 }
 

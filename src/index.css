@@ -3,6 +3,7 @@
 @import url('./blocks/Welcome.css');
 @import url('./blocks/Form.css');
 @import url('./blocks/Loading.css');
+@import url('./blocks/Rhymebook.css');
 
 body {
   margin: 0;

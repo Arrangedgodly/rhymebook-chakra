@@ -1,0 +1,9 @@
+.Rhymebook {
+  display: flex;
+}
+
+.Rhymebook-form {
+  width: 60%;
+  margin: 5vh auto;
+  text-align: left;
+}
