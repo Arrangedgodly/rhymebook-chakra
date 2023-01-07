@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Loading from "./components/Loading";
 import Rhymebook from "./components/Rhymebook";
 import { useState, useEffect } from "react";
-import { login, checkAuth } from './utils/api';
+import { login, checkAuth, createUser } from './utils/api';
 
 function App() {
   const [activePage, setActivePage] = useState("welcome");
@@ -22,6 +22,14 @@ function App() {
     setIsLoading(true);
     setActivePage("login");
   };
+
+  const handleCreateUser = (name, avatar, email, password) => {
+    createUser(name, avatar, email, password)
+      .then(res => {
+        handleLogin(res.email, password);
+      })
+      .catch(err => console.log(err));
+  }
 
   const handleLogin = (email, password) => {
     login(email, password)
@@ -79,7 +87,7 @@ function App() {
           handleLoginClick={handleLoginClick}
         />
       )}
-      {activePage === "newuser" && <NewUser />}
+      {activePage === "newuser" && <NewUser handleCreateUser={handleCreateUser}/>}
       {activePage === "login" && <Login handleLogin={handleLogin}/>}
       {activePage === 'rhymebook' && <Rhymebook />}
     </div>
