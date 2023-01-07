@@ -7,7 +7,7 @@ import {
   Button
 } from "@chakra-ui/react";
 import { useState } from 'react';
-
+import { Link } from "react-router-dom";
 
 function Login({ handleLogin }) {
  const [email, setEmail] = useState('');
@@ -43,6 +43,9 @@ function Login({ handleLogin }) {
         >
           Submit
         </Button>
+        <p className="Form-subtext">
+        Not an existing user? <Link to='/new-user' className='Form-link'>Create an account here!</Link>
+        </p>
       </form>
   );
 }

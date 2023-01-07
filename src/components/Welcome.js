@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
-function Welcome({ handleNewUserClick, handleLoginClick }) {
+function Welcome({ handleButtonClick }) {
   return (
     <div className="Welcome">
       <h1 className="Welcome-header">Welcome to Rhymebook!</h1>
@@ -9,23 +10,28 @@ function Welcome({ handleNewUserClick, handleLoginClick }) {
       </p>
       <p className="Welcome-subtext">
         Are you a{" "}
+        <Link to='/new-user'>
         <Button
           colorScheme="blue"
           size="lg"
           fontSize="1.5vw"
-          onClick={handleNewUserClick}
+          onClick={handleButtonClick}
         >
           New User
-        </Button>{" "}
+        </Button>
+        </Link>
+        {" "}
         or a{" "}
+        <Link to='/login'>
         <Button
           colorScheme="green"
           size="lg"
           fontSize="1.5vw"
-          onClick={handleLoginClick}
+          onClick={handleButtonClick}
         >
           Returning User
         </Button>
+        </Link>
         {" "}?
       </p>
     </div>

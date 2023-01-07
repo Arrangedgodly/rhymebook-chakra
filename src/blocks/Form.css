@@ -12,3 +12,11 @@
 .Form-title {
   font-size: 2vw;
 }
+
+.Form-subtext {
+  font-size: 1vw;
+}
+
+.Form-link {
+  font-style: italic;
+}
