@@ -4,7 +4,7 @@ function AvatarButton({ currentUser, handleLogout }) {
   return (
     <Menu>
       <MenuButton>
-        <Avatar name={currentUser.name} src={currentUser.avatar} />
+        <Avatar name={currentUser.name} src={currentUser.avatar} size='lg' marginLeft='3' />
       </MenuButton>
       <MenuList>
         <MenuItem>My Notes</MenuItem>
