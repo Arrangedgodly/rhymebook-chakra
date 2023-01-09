@@ -14,6 +14,8 @@ function NewUser({ handleCreateUser }) {
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false); 
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -31,9 +33,22 @@ function NewUser({ handleCreateUser }) {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    if (password === confirmPassword) {
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleCreateUser(name, avatar, email, password);
+    if (!setPasswordError) {
+      handleCreateUser(name, avatar, email, password);
+    } else {
+      setPasswordError(true);
+    }
   };
 
   return (
@@ -50,11 +65,11 @@ function NewUser({ handleCreateUser }) {
       </FormControl>
       <FormControl>
         <FormLabel>Password</FormLabel>
-        <Input type="password" />
+        <Input type="password" value={password} onChange={handlePasswordChange} />
       </FormControl>
       <FormControl>
         <FormLabel>Confirm Password</FormLabel>
-        <Input type="password" />
+        <Input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
       </FormControl>
       <Button type="submit" onClick={handleSubmit}>
         Submit
