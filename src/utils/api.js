@@ -5,11 +5,44 @@ function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(`Error ${res.status}`);
 }
 
-const getNotes = (user) => {
+const getNote = (id) => {
+  return fetch(`${baseUrl}/notes/:id`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({ _id: id }),
+  }).then(checkResponse);
+};
+
+const createNote = () => {
+  return fetch(`${baseUrl}/notes/`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+  }).then(checkResponse);
+};
+
+const getNotes = () => {
   return fetch(`${baseUrl}/notes`, {
     headers: {
       "Content-type": "application/json; charset=UTF-8",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
+  }).then(checkResponse);
+};
+
+const saveNote = (title, body, id) => {
+  return fetch(`${baseUrl}/notes/:id`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({ title, body, _id: id }),
   }).then(checkResponse);
 };
 
@@ -104,6 +137,8 @@ const getFrequentFollowers = (word, engine, topic, max) => {
 
 export {
   getNotes,
+  createNote,
+  saveNote,
   login,
   checkAuth,
   createUser,
@@ -115,5 +150,5 @@ export {
   getRelatedWords,
   getAntonyms,
   getFrequentFollowers,
-  getSynonyms
+  getSynonyms,
 };

@@ -4,6 +4,7 @@ import NewUser from "./components/NewUser";
 import Login from "./components/Login";
 import Loading from "./components/Loading";
 import Rhymebook from "./components/Rhymebook";
+import Notes from "./components/Notes";
 import { useState, useEffect } from "react";
 import { login, checkAuth, createUser } from "./utils/api";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -97,6 +98,7 @@ function App() {
             element={<NewUser handleCreateUser={handleCreateUser} />}
           />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/notes" element={<Notes />} />
         </Routes>
       </div>
     </>

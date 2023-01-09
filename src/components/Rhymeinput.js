@@ -4,14 +4,12 @@ import {
   FormLabel,
   Input,
   Textarea,
-  FormErrorMessage,
-  FormHelperText,
   Button,
 } from "@chakra-ui/react";
 
 function Rhymeinput({ title, handleTitleChange, body, handleBodyChange }) {
   return (
-    <Flex className="Rhymebook" colorScheme="dark">
+    <Flex className="Rhymebook">
       <form className="Rhymebook-form">
         <FormControl>
           <FormLabel>Title</FormLabel>
