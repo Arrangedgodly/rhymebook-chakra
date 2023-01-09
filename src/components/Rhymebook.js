@@ -8,21 +8,32 @@ import {
   FormHelperText,
   Button
 } from "@chakra-ui/react";
+import Rhymeinput from "./Rhymeinput";
+import Rhymebar from "./Rhymebar";
+import { useState } from "react";
 
 function Rhymebook() {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const handleBodyChange = (e) => {
+    setBody(e.target.value);
+  }
+
   return (
-    <Flex className="Rhymebook" colorScheme='dark'>
-      <form className="Rhymebook-form">
-        <FormControl>
-          <FormLabel>Title</FormLabel>
-          <Input type='text' />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Rhymes</FormLabel>
-          <Textarea type='text' h={500} />
-        </FormControl>
-      </form>
-    </Flex>
+    <>
+    <Rhymeinput 
+      body={body}
+      title={title}
+      handleTitleChange={handleTitleChange}
+      handleBodyChange={handleBodyChange}
+    />
+    <Rhymebar />
+    </>
   );
 }
 

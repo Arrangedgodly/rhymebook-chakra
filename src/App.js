@@ -6,13 +6,14 @@ import Loading from "./components/Loading";
 import Rhymebook from "./components/Rhymebook";
 import { useState, useEffect } from "react";
 import { login, checkAuth, createUser } from "./utils/api";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
-  const [activePage, setActivePage] = useState("welcome");
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     setIsLoading(true);
@@ -42,7 +43,6 @@ function App() {
         if (user) {
           setLoggedIn(true);
           setCurrentUser(user);
-          setActivePage("rhymebook");
         } else {
           setLoggedIn(false);
           setCurrentUser({});
@@ -56,7 +56,6 @@ function App() {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
     setCurrentUser({});
-    setActivePage("welcome");
   };
 
   useEffect(() => {
@@ -66,6 +65,10 @@ function App() {
   useEffect(() => {
     handleAuth();
   }, []);
+
+  useEffect(() => {
+    navigate('/');
+  }, [loggedIn])
 
   return (
     <>
@@ -80,6 +83,10 @@ function App() {
           <Route
             path="/"
             element={
+              loggedIn
+              ?
+              <Rhymebook />
+              :
               <Welcome
                 handleButtonClick={handleButtonClick}
               />
@@ -90,7 +97,6 @@ function App() {
             element={<NewUser handleCreateUser={handleCreateUser} />}
           />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/create-note" element={<Rhymebook />} />
         </Routes>
       </div>
     </>

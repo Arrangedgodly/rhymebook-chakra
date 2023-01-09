@@ -10,7 +10,7 @@ function Header({ loggedIn, currentUser, handleLogout }) {
   return (
     <header>
       <Flex alignItems="center" justifyContent="center">
-        <Link to={loggedIn ? '/create-note' : '/'}>
+        <Link to='/'>
           <Image src={logo} className='Rhymebook-logo' />
         </Link>
         <IconButton
