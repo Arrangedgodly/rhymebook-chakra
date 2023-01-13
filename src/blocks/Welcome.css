@@ -1,10 +1,13 @@
 .Welcome {
   display: flex;
   min-height: 80vh;
+  width: 65vw;
+  margin: 3vh auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   row-gap: 10vh;
+  border-radius: 25px;
 }
 
 .Welcome-header {

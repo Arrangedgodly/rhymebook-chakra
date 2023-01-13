@@ -5,15 +5,18 @@ import {
   Input,
   Textarea,
   Button,
+  useColorModeValue
 } from "@chakra-ui/react";
 
 function Rhymeinput({ title, handleTitleChange, body, handleBodyChange }) {
+  const bg = useColorModeValue('gray.300', 'gray.700');
+
   return (
     <Flex className="Rhymebook">
       <form className="Rhymebook-form">
         <FormControl>
           <FormLabel>Title</FormLabel>
-          <Input type="text" value={title} onChange={handleTitleChange} />
+          <Input type="text" value={title} onChange={handleTitleChange} bg={bg} />
         </FormControl>
         <FormControl>
           <FormLabel>Rhymes</FormLabel>
@@ -22,6 +25,7 @@ function Rhymeinput({ title, handleTitleChange, body, handleBodyChange }) {
             h={500}
             value={body}
             onChange={handleBodyChange}
+            bg={bg}
           />
         </FormControl>
       </form>

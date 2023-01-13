@@ -6,7 +6,7 @@ function checkResponse(res) {
 }
 
 const getNote = (id) => {
-  return fetch(`${baseUrl}/notes/:id`, {
+  return fetch(`${baseUrl}/notes/:_id`, {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
@@ -26,6 +26,17 @@ const createNote = () => {
   }).then(checkResponse);
 };
 
+const deleteNote = (id) => {
+  return fetch(`${baseUrl}/notes:_id`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({ _id: id })
+  }).then(checkResponse);
+}
+
 const getNotes = () => {
   return fetch(`${baseUrl}/notes`, {
     headers: {
@@ -36,7 +47,7 @@ const getNotes = () => {
 };
 
 const saveNote = (title, body, id) => {
-  return fetch(`${baseUrl}/notes/:id`, {
+  return fetch(`${baseUrl}/notes/:_id`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -138,6 +149,7 @@ const getFrequentFollowers = (word, engine, topic, max) => {
 export {
   getNotes,
   createNote,
+  deleteNote,
   saveNote,
   login,
   checkAuth,

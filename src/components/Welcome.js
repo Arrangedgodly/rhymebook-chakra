@@ -1,9 +1,11 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function Welcome({ handleButtonClick }) {
+  const bg = useColorModeValue('gray.300', 'gray.700');
+
   return (
-    <div className="Welcome">
+    <Box className="Welcome" bg={bg}>
       <h1 className="Welcome-header">Welcome to Rhymebook!</h1>
       <p className="Welcome-text">
         The API powered notebook that writes your rhymes (and much more) with you!
@@ -34,7 +36,7 @@ function Welcome({ handleButtonClick }) {
         </Link>
         {" "}?
       </p>
-    </div>
+    </Box>
   );
 }
 
