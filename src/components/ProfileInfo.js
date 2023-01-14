@@ -9,13 +9,15 @@ import {
 
 function ProfileInfo({ currentUser }) {
   return (
-    <FormControl>
-      <FormLabel>Username</FormLabel>
-      <Editable defaultValue={currentUser.name}>
-        <EditablePreview />
-        <EditableInput />
-      </Editable>
-    </FormControl>
+    <Flex align='center' justify='center'>
+      <FormControl w='35vw'>
+        <FormLabel fontSize='2xl'>Username</FormLabel>
+        <Editable defaultValue={currentUser.name} fontSize='lg'>
+          <EditablePreview />
+          <EditableInput />
+        </Editable>
+      </FormControl>
+    </Flex>
   );
 }
 
