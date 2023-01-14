@@ -1,5 +1,7 @@
 import {
-  Center,
+  Card,
+  Heading,
+  HStack,
   Wrap,
   WrapItem,
   Text,
@@ -14,6 +16,9 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverAnchor,
+  CardHeader,
+  CardBody,
+  CardFooter,
 } from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
 import { useState, useEffect } from "react";
@@ -37,48 +42,52 @@ function Notes() {
   }, []);
 
   return (
-    <Wrap align="center" justify="center" spacing="3vw">
+    <Wrap align="center" justify="center" spacing="3vw" marginTop='3vh'>
       {notesList.map((note) => (
-        <WrapItem key={note._id} flexDirection="column" alignItems="center">
-          <Center
-            w="25vw"
-            h="25vw"
+        <WrapItem key={note._id} flexDirection="column" alignItems="Card">
+          <Card
+            w="20vw"
+            h="20vw"
             bg={bg}
             borderRadius="5%"
             flexDirection="column"
             justifyContent="space-around"
           >
-            <Text fontSize="2xl" as="b">
-              {note.title}
-            </Text>
-            <Text fontSize="sm">{note.body}</Text>
-          </Center>
-          <Wrap>
-            <Button colorScheme="yellow" h="5vw" w="12vw">
-              Edit
-            </Button>
-            <Popover>
-              <PopoverTrigger>
-                <Button colorScheme="red" h="5vw" w="12vw">
-                  Delete
+            <CardHeader>
+              <Heading>{note.title}</Heading>
+            </CardHeader>
+            <CardBody>
+              <Text fontSize="lg">{note.body}</Text>
+            </CardBody>
+            <CardFooter>
+              <HStack w='100%'>
+                <Button colorScheme="yellow" size='lg' w='50%'>
+                  Edit
                 </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Delete Confirmation</PopoverHeader>
-                <PopoverBody>
-                  Are you sure you want to delete the selected note? This action
-                  can not be reversed!
-                </PopoverBody>
-                <PopoverFooter>
-                  <Button onClick={() => handleDeleteNote(note._id)}>
-                    Confirm
-                  </Button>
-                </PopoverFooter>
-              </PopoverContent>
-            </Popover>
-          </Wrap>
+                <Popover>
+                  <PopoverTrigger>
+                    <Button colorScheme="red" size='lg' w='50%'>
+                      Delete
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverHeader>Delete Confirmation</PopoverHeader>
+                    <PopoverBody>
+                      Are you sure you want to delete the selected note? This
+                      action can not be reversed!
+                    </PopoverBody>
+                    <PopoverFooter>
+                      <Button onClick={() => handleDeleteNote(note._id)}>
+                        Confirm
+                      </Button>
+                    </PopoverFooter>
+                  </PopoverContent>
+                </Popover>
+              </HStack>
+            </CardFooter>
+          </Card>
         </WrapItem>
       ))}
     </Wrap>

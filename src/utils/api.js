@@ -27,7 +27,7 @@ const createNote = () => {
 };
 
 const deleteNote = (id) => {
-  return fetch(`${baseUrl}/notes:_id`, {
+  return fetch(`${baseUrl}/notes/:_id`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json; charset=UTF-8",

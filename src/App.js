@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Loading from "./components/Loading";
 import Rhymebook from "./components/Rhymebook";
 import Notes from "./components/Notes";
+import Profile from "./components/Profile";
 import { useState, useEffect } from "react";
 import { login, checkAuth, createUser } from "./utils/api";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -68,8 +69,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    navigate('/');
-  }, [loggedIn])
+    navigate("/");
+  }, [loggedIn]);
 
   return (
     <>
@@ -84,13 +85,11 @@ function App() {
           <Route
             path="/"
             element={
-              loggedIn
-              ?
-              <Rhymebook />
-              :
-              <Welcome
-                handleButtonClick={handleButtonClick}
-              />
+              loggedIn ? (
+                <Rhymebook />
+              ) : (
+                <Welcome handleButtonClick={handleButtonClick} />
+              )
             }
           />
           <Route
@@ -99,6 +98,10 @@ function App() {
           />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/notes" element={<Notes />} />
+          <Route
+            path="/profile"
+            element={<Profile currentUser={currentUser} />}
+          />
         </Routes>
       </div>
     </>

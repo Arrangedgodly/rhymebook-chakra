@@ -19,6 +19,9 @@ function AvatarButton({ currentUser, handleLogout }) {
         <Link to="/notes">
           <MenuItem>My Notebook</MenuItem>
         </Link>
+        <Link to='/profile'>
+          <MenuItem>My Profile</MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </MenuList>
     </Menu>

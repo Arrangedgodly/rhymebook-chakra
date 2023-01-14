@@ -17,9 +17,14 @@ function Rhymebook() {
     setBody(e.target.value);
   };
 
-  useEffect(() => {
+  const handleCreateNewNote = () => {
     createNote()
       .then(res => setActiveNote(res))
+      .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    handleCreateNewNote()
   }, [])
 
   useEffect(() => {
