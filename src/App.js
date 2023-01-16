@@ -86,7 +86,7 @@ function App() {
             path="/"
             element={
               loggedIn ? (
-                <Rhymebook />
+                <Rhymebook currentUser={currentUser} />
               ) : (
                 <Welcome handleButtonClick={handleButtonClick} />
               )
@@ -100,7 +100,7 @@ function App() {
           <Route path="/notes" element={<Notes />} />
           <Route
             path="/profile"
-            element={<Profile currentUser={currentUser} />}
+            element={<Profile currentUser={currentUser} handleAuth={handleAuth} />}
           />
         </Routes>
       </div>

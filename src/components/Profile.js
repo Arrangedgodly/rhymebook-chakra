@@ -2,7 +2,7 @@ import { Tabs, TabList, TabPanel, TabPanels, Tab } from "@chakra-ui/react";
 import ProfileInfo from "./ProfileInfo";
 import Preferences from "./Preferences";
 
-function Profile({ currentUser }) {
+function Profile({ currentUser, handleAuth }) {
   return (
       <Tabs variant='enclosed' align='center'>
         <TabList>
@@ -15,7 +15,7 @@ function Profile({ currentUser }) {
             <ProfileInfo currentUser={currentUser}/>
           </TabPanel>
           <TabPanel>
-            <Preferences currentUser={currentUser}/>
+            <Preferences currentUser={currentUser} handleAuth={handleAuth} />
           </TabPanel>
         </TabPanels>
       </Tabs>

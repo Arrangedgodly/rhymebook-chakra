@@ -54,10 +54,10 @@ function Notes() {
             justifyContent="space-around"
           >
             <CardHeader>
-              <Heading>{note.title}</Heading>
+              <Heading noOfLines={1}>{note.title}</Heading>
             </CardHeader>
             <CardBody>
-              <Text fontSize="lg">{note.body}</Text>
+              <Text fontSize="lg" noOfLines={3}>{note.body}</Text>
             </CardBody>
             <CardFooter>
               <HStack w='100%'>

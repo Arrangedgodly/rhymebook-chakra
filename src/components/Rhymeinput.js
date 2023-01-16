@@ -8,7 +8,7 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 
-function Rhymeinput({ title, handleTitleChange, body, handleBodyChange }) {
+function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLastWordChange }) {
   const bg = useColorModeValue('gray.300', 'gray.700');
 
   return (

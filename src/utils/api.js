@@ -33,9 +33,9 @@ const deleteNote = (id) => {
       "Content-type": "application/json; charset=UTF-8",
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-    body: JSON.stringify({ _id: id })
+    body: JSON.stringify({ _id: id }),
   }).then(checkResponse);
-}
+};
 
 const getNotes = () => {
   return fetch(`${baseUrl}/notes`, {
@@ -96,6 +96,30 @@ const editUser = (name, avatar) => {
     },
     body: JSON.stringify({ name, avatar }),
   }).then(checkResponse);
+};
+
+const updatePref = (rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max) => {
+  return fetch(`${baseUrl}/users/me/pref`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({
+      preferences: {
+        rhy,
+        sdl,
+        adj,
+        noun,
+        rlwd,
+        syn,
+        ant,
+        fqfl,
+        engine,
+        max,
+      },
+    }),
+  });
 };
 
 const getRhyme = (word, engine, topic, max) => {
@@ -163,4 +187,5 @@ export {
   getAntonyms,
   getFrequentFollowers,
   getSynonyms,
+  updatePref,
 };
