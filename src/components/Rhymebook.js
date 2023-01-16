@@ -29,7 +29,8 @@ function Rhymebook({ currentUser }) {
   const [synonyms, setSynonyms] = useState([]);
   const [antonyms, setAntonyms] = useState([]);
   const [freqFollowers, setFreqFollowers] = useState([]);
-  const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } = currentUser.preferences;
+  const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } =
+    currentUser.preferences;
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -37,9 +38,9 @@ function Rhymebook({ currentUser }) {
 
   const handleLastWordChange = (e) => {
     if (e.key === ' ' || e.key === 'Enter') {
-      setLastWord(getLastWord(body));
+    setLastWord(getLastWord(body));
     }
-  }
+  };
 
   const handleBodyChange = (e) => {
     setBody(e.target.value);
@@ -52,64 +53,57 @@ function Rhymebook({ currentUser }) {
   };
 
   const handleAPICalls = () => {
-    if (lastWord !== '') {
-    if (rhy) {
-      getRhyme(lastWord, engine, title, max)
-        .then(res => setRhymes(res))
-        .catch(err => console.log(err))
+    if (lastWord !== "") {
+      if (rhy) {
+        getRhyme(lastWord, engine, title, max)
+          .then((res) => setRhymes(res))
+          .catch((err) => console.log(err));
+      }
+      if (sdl) {
+        getSoundAlike(lastWord, engine, title, max)
+          .then((res) => setSoundAlikes(res))
+          .catch((err) => console.log(err));
+      }
+      if (adj) {
+        getRelatedAdjectives(lastWord, engine, title, max)
+          .then((res) => setAdjectives(res))
+          .catch((err) => console.log(err));
+      }
+      if (noun) {
+        getRelatedNouns(lastWord, engine, title, max)
+          .then((res) => setNouns(res))
+          .catch((err) => console.log(err));
+      }
+      if (rlwd) {
+        getRelatedWords(lastWord, engine, title, max)
+          .then((res) => setWords(res))
+          .catch((err) => console.log(err));
+      }
+      if (syn) {
+        getSynonyms(lastWord, engine, title, max)
+          .then((res) => setSynonyms(res))
+          .catch((err) => console.log(err));
+      }
+      if (ant) {
+        getAntonyms(lastWord, engine, title, max)
+          .then((res) => setAntonyms(res))
+          .catch((err) => console.log(err));
+      }
+      if (fqfl) {
+        getFrequentFollowers(lastWord, engine, title, max)
+          .then((res) => setFreqFollowers(res))
+          .catch((err) => console.log(err));
+      }
     }
-    if (sdl) {
-      getSoundAlike(lastWord, engine, title, max)
-        .then(res => setSoundAlikes(res))
-        .catch(err => console.log(err))
-    }
-    if (adj) {
-      getRelatedAdjectives(lastWord, engine, title, max)
-        .then(res => setAdjectives(res))
-        .catch(err => console.log(err))
-    }
-    if (noun) {
-      getRelatedNouns(lastWord, engine, title, max)
-        .then(res => setNouns(res))
-        .catch(err => console.log(err))
-    }
-    if (rlwd) {
-      getRelatedWords(lastWord, engine, title, max)
-        .then(res => setWords(res))
-        .catch(err => console.log(err))
-    }
-    if (syn) {
-      getSynonyms(lastWord, engine, title, max)
-        .then(res => setSynonyms(res))
-        .catch(err => console.log(err))
-    }
-    if (ant) {
-      getAntonyms(lastWord, engine, title, max)
-        .then(res => setAntonyms(res))
-        .catch(err => console.log(err))
-    }
-    if (fqfl) {
-      getFrequentFollowers(lastWord, engine, title, max)
-        .then(res => setFreqFollowers(res))
-        .catch(err => console.log(err))
-    }}
-  }
+  };
 
   useEffect(() => {
     handleCreateNewNote();
   }, []);
 
   useEffect(() => {
-    window.addEventListener("keydown", handleLastWordChange);
-
-    return () => {
-      window.removeEventListener("keydown", handleLastWordChange);
-    }
-  }, [])
-
-  useEffect(() => {
-    handleAPICalls()
-  }, [lastWord])
+    handleAPICalls();
+  }, [lastWord]);
 
   useEffect(() => {
     clearTimeout(timer.current);
@@ -117,7 +111,7 @@ function Rhymebook({ currentUser }) {
       if (title !== "" && body !== "") {
         saveNote(title, body, activeNote._id).then((res) => setActiveNote(res));
       }
-    }, 1000);
+    }, 1000)
   }, [title]);
 
   useEffect(() => {

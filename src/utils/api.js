@@ -131,43 +131,43 @@ const getRhyme = (word, engine, topic, max) => {
 const getSoundAlike = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_nry=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getRelatedAdjectives = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_jja=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getRelatedNouns = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_jjb=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getRelatedWords = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_trg=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getSynonyms = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_syn=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getAntonyms = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_ant=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 const getFrequentFollowers = (word, engine, topic, max) => {
   return fetch(
     `${rhymeUrl}?rel_bga=${word}&${engine}=${topic}&max=${max}`
-  ).then(this._checkResponse);
+  ).then(checkResponse);
 };
 
 export {

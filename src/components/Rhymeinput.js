@@ -25,6 +25,7 @@ function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLa
             h={500}
             value={body}
             onChange={handleBodyChange}
+            onKeyDown={handleLastWordChange}
             bg={bg}
           />
         </FormControl>
