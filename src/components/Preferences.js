@@ -115,7 +115,7 @@ function Preferences({ currentUser, handleAuth }) {
             {"(but less results)"}
           </FormHelperText>
           <FormLabel fontSize="2xl">Max Query Returns</FormLabel>
-          <Slider aria-label="slider-ex-1" defaultValue={max} max={45} min={5} step={5} marginBottom='3vh' onChange={(val) => setMax(val)}>
+          <Slider aria-label="slider-ex-1" maxWidth='50%' defaultValue={max} max={45} min={5} step={5} marginBottom='3vh' onChange={(val) => setMax(val)}>
             <SliderMark value={5} mt="2" ml="-2" fontSize="sm">
               5
             </SliderMark>

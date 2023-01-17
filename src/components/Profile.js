@@ -12,7 +12,7 @@ function Profile({ currentUser, handleAuth }) {
 
         <TabPanels>
           <TabPanel>
-            <ProfileInfo currentUser={currentUser}/>
+            <ProfileInfo currentUser={currentUser} handleAuth={handleAuth} />
           </TabPanel>
           <TabPanel>
             <Preferences currentUser={currentUser} handleAuth={handleAuth} />

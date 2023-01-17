@@ -118,8 +118,21 @@ const updatePref = (rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max) => {
         max,
       },
     }),
-  });
+  }).then(checkResponse);
 };
+
+const updateInfo = (name, avatar, email) => {
+  return fetch(
+    `${baseUrl}/users/me/info`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: JSON.stringify({ name, avatar, email })
+    }
+  ).then(checkResponse);
+}
 
 const getRhyme = (word, engine, topic, max) => {
   return fetch(
@@ -188,4 +201,5 @@ export {
   getFrequentFollowers,
   getSynonyms,
   updatePref,
+  updateInfo
 };
