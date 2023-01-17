@@ -22,10 +22,14 @@ import {
 } from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
 import { useState, useEffect } from "react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 function Notes() {
   const [notesList, setNotesList] = useState([]);
   const bg = useColorModeValue("gray.300", "gray.500");
+  const edit = useColorModeValue("yellow.500", "yellow.300");
+  const deleteColor = useColorModeValue("red.500", "red.300");
 
   const handleDeleteNote = (id) => {
     deleteNote(id)
@@ -60,15 +64,13 @@ function Notes() {
               <Text fontSize="lg" noOfLines={3}>{note.body}</Text>
             </CardBody>
             <CardFooter>
-              <HStack w='100%'>
-                <Button colorScheme="yellow" size='lg' w='50%'>
-                  Edit
-                </Button>
+              <HStack w='100%' justify='center'>
+                <Link to={`/notes/${note._id}`}>
+                <EditIcon color={edit} boxSize={10} w='50%' />
+                </Link>
                 <Popover>
                   <PopoverTrigger>
-                    <Button colorScheme="red" size='lg' w='50%'>
-                      Delete
-                    </Button>
+                    <DeleteIcon color={deleteColor} boxSize={10} w='50%' />
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />

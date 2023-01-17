@@ -20,7 +20,11 @@ function ProfileInfo({ currentUser }) {
         </Flex>
         <Flex direction="column" align="center">
           <FormLabel fontSize="2xl">Avatar</FormLabel>
-          <Editable defaultValue={currentUser.avatar} fontSize="lg">
+          <Editable
+            defaultValue={currentUser.avatar}
+            placeholder="Submit a URL for your Avatar"
+            fontSize="lg"
+          >
             <EditablePreview />
             <EditableInput />
           </Editable>

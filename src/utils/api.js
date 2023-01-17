@@ -6,13 +6,12 @@ function checkResponse(res) {
 }
 
 const getNote = (id) => {
-  return fetch(`${baseUrl}/notes/:_id`, {
+  return fetch(`${baseUrl}/notes/${id}`, {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-    body: JSON.stringify({ _id: id }),
   }).then(checkResponse);
 };
 
@@ -77,13 +76,13 @@ const checkAuth = (token) => {
   }).then(checkResponse);
 };
 
-const createUser = (name, avatar, email, password) => {
+const createUser = (name, email, password) => {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, avatar, email, password }),
+    body: JSON.stringify({ name, email, password }),
   }).then(checkResponse);
 };
 
@@ -172,6 +171,7 @@ const getFrequentFollowers = (word, engine, topic, max) => {
 
 export {
   getNotes,
+  getNote,
   createNote,
   deleteNote,
   saveNote,

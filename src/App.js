@@ -99,8 +99,14 @@ function App() {
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/notes" element={<Notes />} />
           <Route
+            path="/notes/:_id"
+            element={<Rhymebook currentUser={currentUser} />}
+          />
+          <Route
             path="/profile"
-            element={<Profile currentUser={currentUser} handleAuth={handleAuth} />}
+            element={
+              <Profile currentUser={currentUser} handleAuth={handleAuth} />
+            }
           />
         </Routes>
       </div>

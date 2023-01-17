@@ -1,8 +1,10 @@
 import Rhymeinput from "./Rhymeinput";
 import Rhymebar from "./Rhymebar";
 import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   createNote,
+  getNote,
   saveNote,
   getRhyme,
   getSoundAlike,
@@ -17,6 +19,7 @@ import { getLastWord } from "../utils/constants";
 
 function Rhymebook({ currentUser }) {
   const [activeNote, setActiveNote] = useState({});
+  const { _id } = useParams();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [lastWord, setLastWord] = useState("");
@@ -51,6 +54,12 @@ function Rhymebook({ currentUser }) {
       .then((res) => setActiveNote(res))
       .catch((err) => console.log(err));
   };
+
+  const handleGetNote = () => {
+    getNote(_id)
+      .then(res => setActiveNote(res))
+      .catch(err => console.log(err))
+  }
 
   const handleAPICalls = () => {
     if (lastWord !== "") {
@@ -98,7 +107,11 @@ function Rhymebook({ currentUser }) {
   };
 
   useEffect(() => {
-    handleCreateNewNote();
+    if (_id) {
+      handleGetNote(_id);
+    } else {
+      handleCreateNewNote();
+    }
   }, []);
 
   useEffect(() => {
@@ -122,6 +135,11 @@ function Rhymebook({ currentUser }) {
       }
     }, 1000);
   }, [body]);
+
+  useEffect(() => {
+    setTitle(activeNote.title);
+    setBody(activeNote.body);
+  }, [activeNote]);
 
   return (
     <>

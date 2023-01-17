@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FormControl,
   FormLabel,
+  InputGroup,
   Input,
+  InputRightElement,
   FormErrorMessage,
   FormHelperText,
   Button,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+const validator = require("validator");
 
 function NewUser({ handleCreateUser }) {
   const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false); 
+  const [passwordError, setPasswordError] = useState(false);
+  const [hidePasswords, setHidePasswords] = useState(true);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-  };
-
-  const handleAvatarChange = (e) => {
-    setAvatar(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -35,21 +36,28 @@ function NewUser({ handleCreateUser }) {
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
-    if (password === confirmPassword) {
-      setPasswordError(false);
+  };
+
+  const handleHidePasswords = () => {
+    setHidePasswords(!hidePasswords);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!passwordError) {
+      handleCreateUser(name, email, password);
     } else {
       setPasswordError(true);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!setPasswordError) {
-      handleCreateUser(name, avatar, email, password);
-    } else {
-      setPasswordError(true);
-    }
-  };
+  useEffect(() => {
+    setEmailError(!validator.isEmail(email));
+  }, [email]);
+
+  useEffect(() => {
+    setPasswordError(!(password === confirmPassword));
+  }, [confirmPassword]);
 
   return (
     <form className="Form">
@@ -58,24 +66,50 @@ function NewUser({ handleCreateUser }) {
         <FormLabel>Username</FormLabel>
         <Input type="text" value={name} onChange={handleNameChange} />
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={emailError}>
         <FormLabel>Email address</FormLabel>
-        <Input type="email" value={email} onChange={handleEmailChange}/>
+        <Input type="email" value={email} onChange={handleEmailChange} />
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={passwordError}>
         <FormLabel>Password</FormLabel>
-        <Input type="password" value={password} onChange={handlePasswordChange} />
+        <InputGroup>
+          <Input
+            type={hidePasswords ? "password" : "text"}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <InputRightElement
+            children={hidePasswords ? <ViewIcon /> : <ViewOffIcon />}
+            onClick={handleHidePasswords}
+          />
+        </InputGroup>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={passwordError}>
         <FormLabel>Confirm Password</FormLabel>
-        <Input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+        <InputGroup>
+          <Input
+            type={hidePasswords ? "password" : "text"}
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          <InputRightElement
+            children={hidePasswords ? <ViewIcon /> : <ViewOffIcon />}
+            onClick={handleHidePasswords}
+          />
+        </InputGroup>
+        <FormErrorMessage>
+          Confirmation Password does not match
+        </FormErrorMessage>
       </FormControl>
       <Button type="submit" onClick={handleSubmit}>
         Submit
       </Button>
       <p className="Form-subtext">
-        Already an existing user? <Link to='/login' className='Form-link'>Click Here!</Link>
+        Already an existing user?{" "}
+        <Link to="/login" className="Form-link">
+          Click Here!
+        </Link>
       </p>
     </form>
   );

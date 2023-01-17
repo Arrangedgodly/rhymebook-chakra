@@ -29,9 +29,9 @@ function Rhymebar({
   return (
     <TableContainer textAlign="center" alignItems="center" justifyContent='center'>
       <Table variant="simple">
-        <TableCaption placement="top">Suggested Words</TableCaption>
+        <TableCaption placement="top" fontSize='xl'>Suggested Words</TableCaption>
         <Thead>
-          <Tr>
+          <Tr fontSize='lg'>
             {rhy && <Th>Rhymes</Th>}
             {sdl && <Th>Sound Alikes</Th>}
             {adj && <Th>Adjectives</Th>}
