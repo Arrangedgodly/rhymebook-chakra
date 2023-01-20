@@ -6,6 +6,7 @@ import {
   WrapItem,
   Text,
   Button,
+  IconButton,
   useColorModeValue,
   Popover,
   PopoverTrigger,
@@ -22,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
 import { useState, useEffect } from "react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
 function Notes() {
@@ -46,7 +47,7 @@ function Notes() {
   }, []);
 
   return (
-    <Wrap align="center" justify="center" spacing="3vw" marginTop='3vh'>
+    <Wrap align="center" justify="center" spacing="3vw" marginTop="3vh">
       {notesList.map((note) => (
         <WrapItem key={note._id} flexDirection="column" alignItems="Card">
           <Card
@@ -61,16 +62,28 @@ function Notes() {
               <Heading noOfLines={1}>{note.title}</Heading>
             </CardHeader>
             <CardBody>
-              <Text fontSize="lg" noOfLines={3}>{note.body}</Text>
+              <Text fontSize="lg" noOfLines={3}>
+                {note.body}
+              </Text>
             </CardBody>
             <CardFooter>
-              <HStack w='100%' justify='center'>
+              <HStack w="100%" justify="center">
                 <Link to={`/notes/${note._id}`}>
-                <EditIcon color={edit} boxSize={10} w='50%' />
+                  <IconButton
+                    colorScheme="yellow"
+                    variant="ghost"
+                    icon={<EditIcon color={edit} boxSize={10} w="50%" />}
+                  />
                 </Link>
                 <Popover>
                   <PopoverTrigger>
-                    <DeleteIcon color={deleteColor} boxSize={10} w='50%' />
+                    <IconButton
+                      variant="ghost"
+                      colorScheme="red"
+                      icon={
+                        <DeleteIcon color={deleteColor} boxSize={10} w="50%" />
+                      }
+                    />
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverArrow />
@@ -92,6 +105,17 @@ function Notes() {
           </Card>
         </WrapItem>
       ))}
+      <WrapItem w="100%" display="flex" justifyContent="center">
+        <Link to="/">
+          <IconButton
+            variant="ghost"
+            size="lg"
+            boxSize={75}
+            icon={<PlusSquareIcon boxSize={75} />}
+            colorScheme="green"
+          />
+        </Link>
+      </WrapItem>
     </Wrap>
   );
 }
