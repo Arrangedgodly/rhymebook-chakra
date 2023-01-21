@@ -1,5 +1,6 @@
 import Rhymeinput from "./Rhymeinput";
 import Rhymebar from "./Rhymebar";
+import Rhymetags from "./Rhymetags";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -16,6 +17,7 @@ import {
   getFrequentFollowers,
 } from "../utils/api";
 import { getLastWord } from "../utils/constants";
+import { useDisclosure } from "@chakra-ui/react";
 
 function Rhymebook({ currentUser }) {
   const [activeNote, setActiveNote] = useState({});
@@ -32,6 +34,7 @@ function Rhymebook({ currentUser }) {
   const [synonyms, setSynonyms] = useState([]);
   const [antonyms, setAntonyms] = useState([]);
   const [freqFollowers, setFreqFollowers] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } =
     currentUser.preferences;
 
@@ -40,8 +43,8 @@ function Rhymebook({ currentUser }) {
   };
 
   const handleLastWordChange = (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-    setLastWord(getLastWord(body));
+    if (e.key === " " || e.key === "Enter") {
+      setLastWord(getLastWord(body));
     }
   };
 
@@ -57,9 +60,9 @@ function Rhymebook({ currentUser }) {
 
   const handleGetNote = () => {
     getNote(_id)
-      .then(res => setActiveNote(res))
-      .catch(err => console.log(err))
-  }
+      .then((res) => setActiveNote(res))
+      .catch((err) => console.log(err));
+  };
 
   const handleAPICalls = () => {
     if (lastWord !== "") {
@@ -124,7 +127,7 @@ function Rhymebook({ currentUser }) {
       if (title !== "" && body !== "") {
         saveNote(title, body, activeNote._id).then((res) => setActiveNote(res));
       }
-    }, 1000)
+    }, 1000);
   }, [title]);
 
   useEffect(() => {
@@ -149,6 +152,7 @@ function Rhymebook({ currentUser }) {
         handleTitleChange={handleTitleChange}
         handleBodyChange={handleBodyChange}
         handleLastWordChange={handleLastWordChange}
+        onOpen={onOpen}
       />
       <Rhymebar
         currentUser={currentUser}
@@ -161,6 +165,7 @@ function Rhymebook({ currentUser }) {
         antonyms={antonyms}
         freqFollowers={freqFollowers}
       />
+      <Rhymetags isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

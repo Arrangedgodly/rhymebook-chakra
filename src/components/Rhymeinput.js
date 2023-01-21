@@ -5,14 +5,15 @@ import {
   Input,
   Textarea,
   Button,
-  useColorModeValue
+  useColorModeValue,
+  HStack
 } from "@chakra-ui/react";
 
-function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLastWordChange }) {
+function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLastWordChange, onOpen }) {
   const bg = useColorModeValue('gray.300', 'gray.700');
 
   return (
-    <Flex className="Rhymebook">
+    <Flex direction='column' align='center' justify='center'>
       <form className="Rhymebook-form">
         <FormControl>
           <FormLabel>Title</FormLabel>
@@ -22,7 +23,7 @@ function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLa
           <FormLabel>Rhymes</FormLabel>
           <Textarea
             type="text"
-            h={500}
+            h={380}
             value={body}
             onChange={handleBodyChange}
             onKeyDown={handleLastWordChange}
@@ -30,6 +31,15 @@ function Rhymeinput({ title, handleTitleChange, body, handleBodyChange, handleLa
           />
         </FormControl>
       </form>
+      <HStack>
+        
+      </HStack>
+      <Button
+        onClick={onOpen}
+        w={250}
+      >
+        Add Tags
+      </Button>
     </Flex>
   );
 }

@@ -59,10 +59,12 @@ function Notes() {
             justifyContent="space-around"
           >
             <CardHeader>
-              <Heading noOfLines={1}>{note.title}</Heading>
+              <Heading noOfLines={1} fontSize="xl">
+                {note.title}
+              </Heading>
             </CardHeader>
             <CardBody>
-              <Text fontSize="lg" noOfLines={3}>
+              <Text fontSize="sm" noOfLines={8}>
                 {note.body}
               </Text>
             </CardBody>
