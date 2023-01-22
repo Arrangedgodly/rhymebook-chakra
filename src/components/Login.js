@@ -6,12 +6,14 @@ import {
   FormHelperText,
   Button
 } from "@chakra-ui/react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+const validator = require("validator");
 
 function Login({ handleLogin }) {
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
+ const [emailError, setEmailError] = useState(false);
 
  const handleEmailChange = (e) => {
   setEmail(e.target.value);
@@ -26,12 +28,17 @@ function Login({ handleLogin }) {
   handleLogin(email, password);
  }
 
+ useEffect(() => {
+  setEmailError(!validator.isEmail(email));
+}, [email]);
+
   return (
       <form className="Form">
         <p className="Form-title">Welcome Back! Enter your credentials below:</p>
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={emailError}>
           <FormLabel>Email address</FormLabel>
           <Input type="email" value={email} onChange={handleEmailChange} />
+          <FormErrorMessage>Input must be an email address</FormErrorMessage>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Password</FormLabel>

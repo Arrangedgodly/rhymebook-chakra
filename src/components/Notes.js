@@ -6,7 +6,7 @@ import {
   WrapItem,
   Text,
   Button,
-  IconButton,
+  Badge,
   useColorModeValue,
   Popover,
   PopoverTrigger,
@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 
 function Notes() {
   const [notesList, setNotesList] = useState([]);
+  const [activeTag, setActiveTag] = useState("");
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
   const deleteColor = useColorModeValue("red.500", "red.300");
@@ -40,51 +41,75 @@ function Notes() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
+  const handleTagClick = (name) => {
+    if (activeTag !== name) {
+      setActiveTag(name);
+    } else {
+      setActiveTag("");
+    }
+  };
+
+  const resetNotes = () => {
     getNotes()
       .then((res) => setNotesList(res))
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    resetNotes();
   }, []);
 
+  useEffect(() => {
+    if (activeTag === "") {
+      resetNotes();
+    } else {
+      const sortedList = notesList.filter((note) =>
+        note.tags.find((tag) => tag.name == activeTag)
+      );
+      setNotesList(sortedList);
+    }
+  }, [activeTag]);
+
   return (
-    <Wrap align="center" justify="center" spacing="3vw" marginTop="3vh">
+    <Wrap align="flex-start" justify="center" spacing="3vw" marginTop="3vh">
       {notesList.map((note) => (
         <WrapItem key={note._id} flexDirection="column" alignItems="Card">
           <Card
-            w="20vw"
-            h="20vw"
-            bg={bg}
+            boxSize="xs"
             borderRadius="5%"
             flexDirection="column"
             justifyContent="space-around"
+            size="md"
+            variant="elevated"
+            bg={bg}
           >
-            <CardHeader>
+            <CardHeader h="10%">
               <Heading noOfLines={1} fontSize="xl">
                 {note.title}
               </Heading>
             </CardHeader>
-            <CardBody>
+            <CardBody h="70%">
               <Text fontSize="sm" noOfLines={8}>
                 {note.body}
               </Text>
             </CardBody>
-            <CardFooter>
+            <CardFooter h="20%">
               <HStack w="100%" justify="center">
                 <Link to={`/notes/${note._id}`}>
-                  <IconButton
-                    colorScheme="yellow"
-                    variant="ghost"
-                    icon={<EditIcon color={edit} boxSize={10} w="50%" />}
+                  <EditIcon
+                    color={edit}
+                    boxSize={10}
+                    w="50%"
+                    _hover={{ color: "yellow.700" }}
                   />
                 </Link>
                 <Popover>
                   <PopoverTrigger>
-                    <IconButton
-                      variant="ghost"
-                      colorScheme="red"
-                      icon={
-                        <DeleteIcon color={deleteColor} boxSize={10} w="50%" />
-                      }
+                    <DeleteIcon
+                      color={deleteColor}
+                      boxSize={10}
+                      w="50%"
+                      _hover={{ cursor: "pointer", color: "red.700" }}
                     />
                   </PopoverTrigger>
                   <PopoverContent>
@@ -105,16 +130,33 @@ function Notes() {
               </HStack>
             </CardFooter>
           </Card>
+          {note.tags && (
+            <HStack
+              display="flex"
+              align="center"
+              justify="center"
+              marginTop={1}
+            >
+              {note.tags.map((tag) => (
+                <Badge
+                  variant={activeTag === tag.name ? "solid" : "outline"}
+                  colorScheme={tag.color}
+                  key={tag._id}
+                  onClick={() => handleTagClick(tag.name)}
+                >
+                  {tag.name}
+                </Badge>
+              ))}
+            </HStack>
+          )}
         </WrapItem>
       ))}
       <WrapItem w="100%" display="flex" justifyContent="center">
         <Link to="/">
-          <IconButton
-            variant="ghost"
-            size="lg"
+          <PlusSquareIcon
             boxSize={75}
-            icon={<PlusSquareIcon boxSize={75} />}
-            colorScheme="green"
+            color="green.300"
+            _hover={{ color: "green.500" }}
           />
         </Link>
       </WrapItem>

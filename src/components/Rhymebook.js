@@ -7,6 +7,7 @@ import {
   createNote,
   getNote,
   saveNote,
+  addNoteTag,
   getRhyme,
   getSoundAlike,
   getRelatedAdjectives,
@@ -15,6 +16,7 @@ import {
   getSynonyms,
   getAntonyms,
   getFrequentFollowers,
+  deleteNoteTag,
 } from "../utils/api";
 import { getLastWord } from "../utils/constants";
 import { useDisclosure } from "@chakra-ui/react";
@@ -60,6 +62,18 @@ function Rhymebook({ currentUser }) {
 
   const handleGetNote = () => {
     getNote(_id)
+      .then((res) => setActiveNote(res))
+      .catch((err) => console.log(err));
+  };
+
+  const handleAddNoteTag = (name, color) => {
+    addNoteTag(name, color, activeNote._id)
+      .then((res) => setActiveNote(res))
+      .catch((err) => console.log(err));
+  };
+
+  const handleDeleteNoteTag = (noteId, tagId) => {
+    deleteNoteTag(noteId, tagId)
       .then((res) => setActiveNote(res))
       .catch((err) => console.log(err));
   };
@@ -153,6 +167,8 @@ function Rhymebook({ currentUser }) {
         handleBodyChange={handleBodyChange}
         handleLastWordChange={handleLastWordChange}
         onOpen={onOpen}
+        activeNote={activeNote}
+        handleDeleteNoteTag={handleDeleteNoteTag}
       />
       <Rhymebar
         currentUser={currentUser}
@@ -165,7 +181,11 @@ function Rhymebook({ currentUser }) {
         antonyms={antonyms}
         freqFollowers={freqFollowers}
       />
-      <Rhymetags isOpen={isOpen} onClose={onClose} />
+      <Rhymetags
+        isOpen={isOpen}
+        onClose={onClose}
+        handleAddNoteTag={handleAddNoteTag}
+      />
     </>
   );
 }

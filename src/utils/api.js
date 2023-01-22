@@ -26,13 +26,12 @@ const createNote = () => {
 };
 
 const deleteNote = (id) => {
-  return fetch(`${baseUrl}/notes/:_id`, {
+  return fetch(`${baseUrl}/notes/${id}`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-    body: JSON.stringify({ _id: id }),
   }).then(checkResponse);
 };
 
@@ -46,15 +45,37 @@ const getNotes = () => {
 };
 
 const saveNote = (title, body, id) => {
-  return fetch(`${baseUrl}/notes/:_id`, {
+  return fetch(`${baseUrl}/notes/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-    body: JSON.stringify({ title, body, _id: id }),
+    body: JSON.stringify({ title, body }),
   }).then(checkResponse);
 };
+
+const addNoteTag = (name, color, id) => {
+  const tag = { name, color };
+  return fetch(`${baseUrl}/notes/${id}/tags`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({ tag }),
+  }).then(checkResponse);
+}
+
+const deleteNoteTag = (noteId, tagId) => {
+  return fetch(`${baseUrl}/notes/${noteId}/tags/${tagId}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+  }).then(checkResponse);
+}
 
 const login = (email, password) => {
   return fetch(`${baseUrl}/signin`, {
@@ -188,6 +209,8 @@ export {
   createNote,
   deleteNote,
   saveNote,
+  addNoteTag,
+  deleteNoteTag,
   login,
   checkAuth,
   createUser,

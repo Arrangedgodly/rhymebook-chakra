@@ -52,6 +52,7 @@ function ProfileInfo({ currentUser, handleAuth }) {
             defaultValue={avatar}
             placeholder="Submit a URL for your Avatar"
             fontSize="lg"
+            maxW='50%'
           >
             <EditablePreview />
             <EditableInput  onChange={handleAvatarChange} />

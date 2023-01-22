@@ -16,12 +16,24 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-function Rhymetags({ isOpen, onClose }) {
+function Rhymetags({ isOpen, onClose, handleAddNoteTag }) {
   const [tag, setTag] = useState("");
+  const [color, setColor] = useState('red');
 
   const handleTagChange = (e) => {
     setTag(e.target.value);
   };
+
+  const handleColorChange = (e) => {
+    setColor(e.target.value);
+  }
+
+  const handleSubmit = () => {
+    handleAddNoteTag(tag, color);
+    setTag('');
+    setColor('red');
+    onClose();
+  }
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="bottom">
@@ -37,37 +49,37 @@ function Rhymetags({ isOpen, onClose }) {
               value={tag}
               onChange={handleTagChange}
             />
-            <RadioGroup defaultValue="red">
+            <RadioGroup value={color}>
               <HStack justify='center'>
-                <Radio value="red">
-                  <Badge colorScheme="red">{tag === '' ? 'Red' : tag}</Badge>
+                <Radio value="red" onChange={handleColorChange}>
+                  <Badge colorScheme="red" variant={color === 'red' ? 'solid' : 'outline'}>Red</Badge>
                 </Radio>
-                <Radio value="green">
-                  <Badge colorScheme="green">{tag === '' ? 'Green' : tag}</Badge>
+                <Radio value="green" onChange={handleColorChange}>
+                  <Badge colorScheme="green" variant={color === 'green' ? 'solid' : 'outline'}>Green</Badge>
                 </Radio>
-                <Radio value="blue">
-                  <Badge colorScheme="blue">{tag === '' ? 'Blue' : tag}</Badge>
+                <Radio value="blue" onChange={handleColorChange}>
+                  <Badge colorScheme="blue" variant={color === 'blue' ? 'solid' : 'outline'}>Blue</Badge>
                 </Radio>
-                <Radio value="orange">
-                  <Badge colorScheme="orange">{tag === '' ? 'Orange' : tag}</Badge>
+                <Radio value="orange" onChange={handleColorChange}>
+                  <Badge colorScheme="orange" variant={color === 'orange' ? 'solid' : 'outline'}>Orange</Badge>
                 </Radio>
-                <Radio value="yellow">
-                  <Badge colorScheme="yellow">{tag === '' ? 'Yellow' : tag}</Badge>
+                <Radio value="yellow" onChange={handleColorChange}>
+                  <Badge colorScheme="yellow" variant={color === 'yellow' ? 'solid' : 'outline'}>Yellow</Badge>
                 </Radio>
-                <Radio value="gray">
-                  <Badge colorScheme="gray">{tag === '' ? 'Gray' : tag}</Badge>
+                <Radio value="gray" onChange={handleColorChange}>
+                  <Badge colorScheme="gray" variant={color === 'gray' ? 'solid' : 'outline'}>Gray</Badge>
                 </Radio>
-                <Radio value="teal">
-                  <Badge colorScheme="teal">{tag === '' ? 'Teal' : tag}</Badge>
+                <Radio value="teal" onChange={handleColorChange}>
+                  <Badge colorScheme="teal" variant={color === 'teal' ? 'solid' : 'outline'}>Teal</Badge>
                 </Radio>
-                <Radio value="cyan">
-                  <Badge colorScheme="cyan">{tag === '' ? 'Cyan' : tag}</Badge>
+                <Radio value="cyan" onChange={handleColorChange}>
+                  <Badge colorScheme="cyan" variant={color === 'cyan' ? 'solid' : 'outline'}>Cyan</Badge>
                 </Radio>
-                <Radio value="purple">
-                  <Badge colorScheme="purple">{tag === '' ? 'Purple' : tag}</Badge>
+                <Radio value="purple" onChange={handleColorChange}>
+                  <Badge colorScheme="purple" variant={color === 'purple' ? 'solid' : 'outline'}>Purple</Badge>
                 </Radio>
-                <Radio value="pink">
-                  <Badge colorScheme="pink">{tag === '' ? 'Pink' : tag}</Badge>
+                <Radio value="pink" onChange={handleColorChange}>
+                  <Badge colorScheme="pink" variant={color === 'pink' ? 'solid' : 'outline'}>Pink</Badge>
                 </Radio>
               </HStack>
             </RadioGroup>
@@ -78,7 +90,7 @@ function Rhymetags({ isOpen, onClose }) {
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="blue">Save</Button>
+          <Button colorScheme="blue" onClick={handleSubmit}>Save</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
