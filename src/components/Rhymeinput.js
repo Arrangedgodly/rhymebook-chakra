@@ -9,8 +9,6 @@ import {
   useColorModeValue,
   HStack,
   Badge,
-  IconButton,
-  flexbox,
 } from "@chakra-ui/react";
 
 function Rhymeinput({

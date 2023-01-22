@@ -1,9 +1,7 @@
-import { Box, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function Welcome({ handleButtonClick }) {
-  const bg = useColorModeValue('gray.300', 'gray.700');
-
   return (
     <Box className="Welcome">
       <h1 className="Welcome-header">Welcome to Rhymebook!</h1>
