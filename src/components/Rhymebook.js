@@ -40,6 +40,17 @@ function Rhymebook({ currentUser }) {
   const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } =
     currentUser.preferences;
   const toast = useToast();
+  const toastIdRef = useRef();
+
+  const updateToast = (title, description, status, duration, isClosable) => {
+    if (toastIdRef.current) {
+      toast.update(toastIdRef.current, { title , description, status, duration, isClosable })
+    }
+  }
+
+  const addToast = (title, description, status, position) => {
+    toastIdRef.current = toast({ title, description, status, position })
+  }
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -68,29 +79,21 @@ function Rhymebook({ currentUser }) {
   };
 
   const handleAddNoteTag = (name, color) => {
+    addToast('Adding Tag', 'Adding the tag to the active note...', 'info')
     addNoteTag(name, color, activeNote._id)
       .then((res) => {
         setActiveNote(res);
-        toast({
-          title: 'Tag added!',
-          status: 'success',
-          isClosable: true,
-          duration: 2000
-        })
+        updateToast('Tag added successfully', '', 'success', '1000', true)
       })
       .catch((err) => console.log(err));
   };
 
   const handleDeleteNoteTag = (noteId, tagId) => {
+    addToast('Removing Tag', 'Removing the tag from the active note...', 'info')
     deleteNoteTag(noteId, tagId)
       .then((res) => {
         setActiveNote(res);
-        toast({
-          title: 'Tag removed!',
-          status: 'error',
-          isClosable: true,
-          duration: 2000
-        })
+        updateToast('Tag removed successfully', '', 'success', '1000', true)
       })
       .catch((err) => console.log(err));
   };
@@ -156,15 +159,10 @@ function Rhymebook({ currentUser }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (title !== "" && body !== "") {
+        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', 'top')
         saveNote(title, body, activeNote._id).then((res) => {
           setActiveNote(res);
-          toast({
-            title: 'Note auto-saved!',
-            status: 'success',
-            isClosable: true,
-            duration: 1000,
-            position: 'top'
-          })
+          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
         });
       }
     }, 1000);
@@ -174,15 +172,10 @@ function Rhymebook({ currentUser }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (title !== "" && body !== "") {
+        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', 'top')
         saveNote(title, body, activeNote._id).then((res) => {
           setActiveNote(res);
-          toast({
-            title: 'Note auto-saved!',
-            status: 'success',
-            isClosable: true,
-            duration: 1000,
-            position: 'top'
-          })
+          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
         });
       }
     }, 1000);

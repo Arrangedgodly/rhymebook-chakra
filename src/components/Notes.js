@@ -21,9 +21,10 @@ import {
   CardBody,
   CardFooter,
   Skeleton,
+  useToast
 } from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { EditIcon, DeleteIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -34,11 +35,25 @@ function Notes() {
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
   const deleteColor = useColorModeValue("red.500", "red.300");
+  const toast = useToast();
+  const toastIdRef = useRef();
+
+  const updateToast = (title, description, status, duration, isClosable) => {
+    if (toastIdRef.current) {
+      toast.update(toastIdRef.current, { title , description, status, duration, isClosable })
+    }
+  }
+
+  const addToast = (title, description, status) => {
+    toastIdRef.current = toast({ title, description, status })
+  }
 
   const handleDeleteNote = (id) => {
+    addToast('Deleting Note', 'Removing the note from your database...', 'info')
     deleteNote(id)
       .then(() => {
         setNotesList((notesList) => notesList.filter((c) => c._id !== id));
+        updateToast('Note successfully removed!', '', 'success', '1000', true)
       })
       .catch((err) => console.log(err));
   };
