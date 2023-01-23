@@ -5,7 +5,8 @@ import {
   FormLabel,
   EditableInput,
   EditablePreview,
-  Button
+  Button,
+  useToast
 } from "@chakra-ui/react";
 import { updateInfo } from "../utils/api";
 import { useState } from "react";
@@ -14,6 +15,7 @@ function ProfileInfo({ currentUser, handleAuth }) {
   const [name, setName] = useState(currentUser.name);
   const [avatar, setAvatar] = useState(currentUser.avatar);
   const [email, setEmail] = useState(currentUser.email);
+  const toast = useToast();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -31,7 +33,14 @@ function ProfileInfo({ currentUser, handleAuth }) {
     e.preventDefault();
     updateInfo(name, avatar, email)
       .then(() => {
-        handleAuth()
+        handleAuth();
+        toast({
+          title: 'Information updated successfully!',
+          status: 'success',
+          isClosable: true,
+          duration: 1000,
+          position: 'top'
+        })
       })
       .catch(err => console.log(err))
   }
@@ -46,13 +55,12 @@ function ProfileInfo({ currentUser, handleAuth }) {
             <EditableInput onChange={handleNameChange} />
           </Editable>
         </Flex>
-        <Flex direction="column" align="center">
+        <Flex direction="column" align="center" justify='center' maxW='50%'>
           <FormLabel fontSize="2xl">Avatar</FormLabel>
           <Editable
             defaultValue={avatar}
             placeholder="Submit a URL for your Avatar"
             fontSize="lg"
-            maxW='50%'
           >
             <EditablePreview />
             <EditableInput  onChange={handleAvatarChange} />

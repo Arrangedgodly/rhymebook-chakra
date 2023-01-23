@@ -14,6 +14,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderMark,
+  useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { updatePref } from "../utils/api";
@@ -29,6 +30,7 @@ function Preferences({ currentUser, handleAuth }) {
   const [fqfl, setFqfl] = useState(currentUser.preferences.fqfl);
   const [engine, setEngine] = useState(currentUser.preferences.engine);
   const [max, setMax] = useState(currentUser.preferences.max);
+  const toast = useToast();
 
   const handleRhy = (e) => {
     setRhy(e.target.checked);
@@ -67,6 +69,13 @@ function Preferences({ currentUser, handleAuth }) {
     updatePref(rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max)
       .then(() => {
         handleAuth();
+        toast({
+          title: 'Preferences updated successfully!',
+          status: 'success',
+          isClosable: true,
+          duration: 1000,
+          position: 'top'
+        })
       })
       .catch((err) => console.log(err));
   };

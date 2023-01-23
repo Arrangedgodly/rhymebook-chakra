@@ -19,7 +19,7 @@ import {
   deleteNoteTag,
 } from "../utils/api";
 import { getLastWord } from "../utils/constants";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 
 function Rhymebook({ currentUser }) {
   const [activeNote, setActiveNote] = useState({});
@@ -39,6 +39,7 @@ function Rhymebook({ currentUser }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } =
     currentUser.preferences;
+  const toast = useToast();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -68,13 +69,29 @@ function Rhymebook({ currentUser }) {
 
   const handleAddNoteTag = (name, color) => {
     addNoteTag(name, color, activeNote._id)
-      .then((res) => setActiveNote(res))
+      .then((res) => {
+        setActiveNote(res);
+        toast({
+          title: 'Tag added!',
+          status: 'success',
+          isClosable: true,
+          duration: 2000
+        })
+      })
       .catch((err) => console.log(err));
   };
 
   const handleDeleteNoteTag = (noteId, tagId) => {
     deleteNoteTag(noteId, tagId)
-      .then((res) => setActiveNote(res))
+      .then((res) => {
+        setActiveNote(res);
+        toast({
+          title: 'Tag removed!',
+          status: 'error',
+          isClosable: true,
+          duration: 2000
+        })
+      })
       .catch((err) => console.log(err));
   };
 
@@ -139,7 +156,16 @@ function Rhymebook({ currentUser }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (title !== "" && body !== "") {
-        saveNote(title, body, activeNote._id).then((res) => setActiveNote(res));
+        saveNote(title, body, activeNote._id).then((res) => {
+          setActiveNote(res);
+          toast({
+            title: 'Note auto-saved!',
+            status: 'success',
+            isClosable: true,
+            duration: 1000,
+            position: 'top'
+          })
+        });
       }
     }, 1000);
   }, [title]);
@@ -148,7 +174,16 @@ function Rhymebook({ currentUser }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (title !== "" && body !== "") {
-        saveNote(title, body, activeNote._id).then((res) => setActiveNote(res));
+        saveNote(title, body, activeNote._id).then((res) => {
+          setActiveNote(res);
+          toast({
+            title: 'Note auto-saved!',
+            status: 'success',
+            isClosable: true,
+            duration: 1000,
+            position: 'top'
+          })
+        });
       }
     }, 1000);
   }, [body]);

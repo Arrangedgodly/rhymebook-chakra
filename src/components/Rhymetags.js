@@ -12,7 +12,7 @@ import {
   Radio,
   Badge,
   Flex,
-  HStack,
+  HStack
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -23,6 +23,12 @@ function Rhymetags({ isOpen, onClose, handleAddNoteTag }) {
   const handleTagChange = (e) => {
     setTag(e.target.value);
   };
+
+  const handleTagSubmit = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
 
   const handleColorChange = (e) => {
     setColor(e.target.value);
@@ -48,8 +54,9 @@ function Rhymetags({ isOpen, onClose, handleAddNoteTag }) {
               placeholder="Input a new tag here..."
               value={tag}
               onChange={handleTagChange}
+              onKeyDown={handleTagSubmit}
             />
-            <RadioGroup value={color}>
+            <RadioGroup value={color} marginTop={2}>
               <HStack justify='center'>
                 <Radio value="red" onChange={handleColorChange}>
                   <Badge colorScheme="red" variant={color === 'red' ? 'solid' : 'outline'}>Red</Badge>

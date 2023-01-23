@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import { useState, useEffect } from "react";
 import { login, checkAuth, createUser } from "./utils/api";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { Skeleton } from "@chakra-ui/react";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -79,8 +80,7 @@ function App() {
         currentUser={currentUser}
         handleLogout={handleLogout}
       />
-      <div className="App">
-        {isLoading && <Loading />}
+      <Skeleton className="App" isLoaded={!isLoading}>
         <Routes>
           <Route
             path="/"
@@ -109,7 +109,7 @@ function App() {
             }
           />
         </Routes>
-      </div>
+      </Skeleton>
     </>
   );
 }
