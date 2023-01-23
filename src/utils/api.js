@@ -1,4 +1,6 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl = process.env.NODE_ENV === 'production' 
+? 'https://api.rhymebook.graydonwasil.com'
+: 'http://localhost:3001';
 const rhymeUrl = "https://api.datamuse.com/words";
 
 function checkResponse(res) {
