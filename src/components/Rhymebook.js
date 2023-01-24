@@ -48,8 +48,8 @@ function Rhymebook({ currentUser }) {
     }
   }
 
-  const addToast = (title, description, status, position) => {
-    toastIdRef.current = toast({ title, description, status, position })
+  const addToast = (title, description, status, duration, isClosable, position) => {
+    toastIdRef.current = toast({ title, description, status, duration, isClosable, position })
   }
 
   const handleTitleChange = (e) => {
@@ -143,6 +143,19 @@ function Rhymebook({ currentUser }) {
     }
   };
 
+  const handleSaveNote = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      if (title !== "" && body !== "" && title !== undefined && body !== undefined) {
+        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', '1000', true, 'top')
+        saveNote(title, body, activeNote._id).then((res) => {
+          setActiveNote(res);
+          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
+        });
+      }
+    }, 1000);
+  }
+
   useEffect(() => {
     if (_id) {
       handleGetNote(_id);
@@ -156,29 +169,11 @@ function Rhymebook({ currentUser }) {
   }, [lastWord]);
 
   useEffect(() => {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      if (title !== "" && body !== "") {
-        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', 'top')
-        saveNote(title, body, activeNote._id).then((res) => {
-          setActiveNote(res);
-          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
-        });
-      }
-    }, 1000);
+    handleSaveNote();
   }, [title]);
 
   useEffect(() => {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      if (title !== "" && body !== "") {
-        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', 'top')
-        saveNote(title, body, activeNote._id).then((res) => {
-          setActiveNote(res);
-          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
-        });
-      }
-    }, 1000);
+    handleSaveNote();
   }, [body]);
 
   useEffect(() => {

@@ -48,7 +48,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {rhymes.map(rhyme => (
-                  <Text>{rhyme.word}</Text>
+                  <Text key={`rhyme-${rhyme.word}`}>{rhyme.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -57,7 +57,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {soundAlikes.map(sound => (
-                  <Text>{sound.word}</Text>
+                  <Text key={`sound-${sound.word}`}>{sound.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -66,7 +66,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {adjectives.map(adjective => (
-                  <Text>{adjective.word}</Text>
+                  <Text key={`adj-${adjective.word}`}>{adjective.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -75,7 +75,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {nouns.map(n => (
-                  <Text>{n.word}</Text>
+                  <Text key={`noun-${noun.word}`}>{n.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -84,7 +84,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {words.map(w => (
-                  <Text>{w.word}</Text>
+                  <Text key={`related-${w.word}`}>{w.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -93,7 +93,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {synonyms.map(s => (
-                  <Text>{s.word}</Text>
+                  <Text key={`syn-${s.word}`}>{s.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -102,7 +102,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {antonyms.map(a => (
-                  <Text>{a.word}</Text>
+                  <Text key={`ant-${a.word}`}>{a.word}</Text>
                 ))}
                 </Flex>
               </Td>
@@ -111,7 +111,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {freqFollowers.map(f => (
-                  <Text>{f.word}</Text>
+                  <Text key={`freq-${f.word}`}>{f.word}</Text>
                 ))}
                 </Flex>
               </Td>

@@ -69,7 +69,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    navigate("/");
+    navigate("/notes");
   }, [loggedIn]);
 
   return (
@@ -100,7 +100,7 @@ function App() {
             element={<NewUser handleCreateUser={handleCreateUser} />}
           />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/notes" element={<Notes />} />
+          <Route path="/notes" element={<Notes currentUser={currentUser} handleAuth={handleAuth} />} />
           <Route
             path="/notes/:_id"
             element={<Rhymebook currentUser={currentUser} />}

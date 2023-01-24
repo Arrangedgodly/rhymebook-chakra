@@ -1,9 +1,4 @@
-import {
-  Wrap,
-  WrapItem,
-  Skeleton,
-  useToast,
-} from "@chakra-ui/react";
+import { Wrap, WrapItem, Skeleton, useToast } from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
 import { useState, useEffect, useRef } from "react";
 import { PlusSquareIcon } from "@chakra-ui/icons";
@@ -11,7 +6,7 @@ import { Link } from "react-router-dom";
 import Note from "./Note";
 import Tags from "./Tags";
 
-function Notes() {
+function Notes({ currentUser, handleAuth }) {
   const [notesList, setNotesList] = useState([]);
   const [sortedList, setSortedList] = useState([]);
   const [activeTag, setActiveTag] = useState("");
@@ -83,9 +78,26 @@ function Notes() {
     }
   }, [activeTag]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      handleAuth()
+    }
+  }, [])
+
   return (
-    <Skeleton isLoaded={isLoaded} fadeDuration={2}>
-      <Wrap align="flex-start" justify="center" spacing="3vw" marginTop="3vh">
+    <Skeleton
+      isLoaded={isLoaded}
+      fadeDuration={2}
+      display="flex"
+      flexDirection="row-reverse"
+    >
+      <Wrap
+        align="flex-start"
+        justify="center"
+        spacing="1vw"
+        marginTop="3vh"
+        w="80vw"
+      >
         {sortedList.length > 0
           ? sortedList.map((note) => (
               <Note
@@ -93,6 +105,7 @@ function Notes() {
                 activeTag={activeTag}
                 handleDeleteNote={handleDeleteNote}
                 handleTagClick={handleTagClick}
+                key={note._id}
               />
             ))
           : notesList.map((note) => (
@@ -101,19 +114,21 @@ function Notes() {
                 activeTag={activeTag}
                 handleDeleteNote={handleDeleteNote}
                 handleTagClick={handleTagClick}
+                key={note._id}
               />
             ))}
         <WrapItem w="100%" display="flex" justifyContent="center">
-          <Link to="/">
+          <Link to="/notes/new">
             <PlusSquareIcon
               boxSize={75}
               color="green.300"
               _hover={{ color: "green.500" }}
+              marginBottom="3vh"
             />
           </Link>
         </WrapItem>
       </Wrap>
-      <Tags 
+      <Tags
         notesList={notesList}
         handleTagClick={handleTagClick}
         activeTag={activeTag}

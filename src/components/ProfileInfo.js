@@ -6,7 +6,7 @@ import {
   EditableInput,
   EditablePreview,
   Button,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { updateInfo } from "../utils/api";
 import { useState } from "react";
@@ -19,15 +19,15 @@ function ProfileInfo({ currentUser, handleAuth }) {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-  }
+  };
 
   const handleAvatarChange = (e) => {
     setAvatar(e.target.value);
-  }
+  };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,15 +35,15 @@ function ProfileInfo({ currentUser, handleAuth }) {
       .then(() => {
         handleAuth();
         toast({
-          title: 'Information updated successfully!',
-          status: 'success',
+          title: "Information updated successfully!",
+          status: "success",
           isClosable: true,
           duration: 1000,
-          position: 'top'
-        })
+          position: "top",
+        });
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Flex align="center" justify="center">
@@ -55,7 +55,7 @@ function ProfileInfo({ currentUser, handleAuth }) {
             <EditableInput onChange={handleNameChange} />
           </Editable>
         </Flex>
-        <Flex direction="column" align="center" justify='center' maxW='50%'>
+        <Flex direction="column" align="center" justify="center" maxW="50%">
           <FormLabel fontSize="2xl">Avatar</FormLabel>
           <Editable
             defaultValue={avatar}
@@ -63,7 +63,7 @@ function ProfileInfo({ currentUser, handleAuth }) {
             fontSize="lg"
           >
             <EditablePreview />
-            <EditableInput  onChange={handleAvatarChange} />
+            <EditableInput onChange={handleAvatarChange} />
           </Editable>
         </Flex>
         <Flex direction="column" align="center">
@@ -73,7 +73,14 @@ function ProfileInfo({ currentUser, handleAuth }) {
             <EditableInput onChange={handleEmailChange} />
           </Editable>
         </Flex>
-        <Button type="button" marginTop='2vh' colorScheme='green' onClick={handleSubmit}>Submit Changes</Button>
+        <Button
+          type="button"
+          marginTop="2vh"
+          colorScheme="green"
+          onClick={handleSubmit}
+        >
+          Submit Changes
+        </Button>
       </FormControl>
     </Flex>
   );
