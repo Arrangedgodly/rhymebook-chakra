@@ -2,7 +2,6 @@ import Header from "./components/Header";
 import Welcome from "./components/Welcome";
 import NewUser from "./components/NewUser";
 import Login from "./components/Login";
-import Loading from "./components/Loading";
 import Rhymebook from "./components/Rhymebook";
 import Notes from "./components/Notes";
 import Profile from "./components/Profile";
@@ -91,6 +90,10 @@ function App() {
                 <Welcome handleButtonClick={handleButtonClick} />
               )
             }
+          />
+          <Route 
+            path="/notes/new"
+            element={<Rhymebook currentUser={currentUser} />}
           />
           <Route
             path="/new-user"

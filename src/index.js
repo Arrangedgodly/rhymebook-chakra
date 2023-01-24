@@ -10,12 +10,10 @@ import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider>
-    <React.StrictMode>
       <BrowserRouter>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
       </BrowserRouter>
-    </React.StrictMode>
   </ChakraProvider>
 );
 
