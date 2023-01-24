@@ -23,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* arrangedgodly@rhymebook.graydonwasil.com:/home/arrangedgodly/rhymebook-chakra"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "rhymebook.graydonwasil.com"
+  "homepage": "https://rhymebook.graydonwasil.com"
 }
