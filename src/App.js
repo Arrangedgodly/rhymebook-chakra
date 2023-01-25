@@ -69,7 +69,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    navigate("/notes");
+    navigate("/");
   }, [loggedIn]);
 
   return (
