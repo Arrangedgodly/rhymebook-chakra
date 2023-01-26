@@ -30,7 +30,7 @@ function Rhymeinput({
           <FormLabel>Title</FormLabel>
           <Input
             type="text"
-            value={title}
+            value={title || ''}
             onChange={handleTitleChange}
             bg={bg}
           />
@@ -40,7 +40,7 @@ function Rhymeinput({
           <Textarea
             type="text"
             h={380}
-            value={body}
+            value={body || ''}
             onChange={handleBodyChange}
             onKeyDown={handleLastWordChange}
             bg={bg}

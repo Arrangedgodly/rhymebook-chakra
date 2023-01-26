@@ -1,19 +1,25 @@
 import { VStack, Badge, Heading } from "@chakra-ui/react";
+import { useState, useEffect } from 'react';
 
 function Tags({ notesList, handleTagClick, activeTag }) {
+  const [sortedTags, setSortedTags] = useState();
   const sortTagsList = (array) => {
-    let sortedTags = [];
+    let sortTags = [];
     for (let i = 0; i < array.length; i++) {
       const tags = array[i].tags;
       for (let j = 0; j < tags.length; j++) {
-        if (!sortedTags.includes(tags[j])) {
-          sortedTags.push(tags[j]);
+        if (!sortTags.some(tag => tag.name === tags[j].name)) {
+          sortTags.push(tags[j]);
         }
       }
     }
-    return sortedTags;
+    return sortTags;
   };
-  const sortedTags = sortTagsList(notesList);
+
+  useEffect(() => {
+    setSortedTags(sortTagsList(notesList))
+  }, [notesList])
+
   return (
     <VStack direction="column" align="center" w="20vw">
       <Heading>Active Tags</Heading>

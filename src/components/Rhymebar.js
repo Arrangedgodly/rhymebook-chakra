@@ -72,7 +72,7 @@ function Rhymebar({
               <Td>
                 <Flex direction='column' justify='flex-start' align='flex-start'>
                 {nouns.map(n => (
-                  <Text key={`noun-${noun.word}`}>{n.word}</Text>
+                  <Text key={`noun-${n.word}`}>{n.word}</Text>
                 ))}
                 </Flex>
               </Td>

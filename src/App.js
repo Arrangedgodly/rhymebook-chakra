@@ -23,8 +23,8 @@ function App() {
 
   const handleCreateUser = (name, avatar, email, password) => {
     createUser(name, avatar, email, password)
-      .then((res) => {
-        handleLogin(res.email, password);
+      .then(() => {
+        navigate('/login')
       })
       .catch((err) => console.log(err));
   };
@@ -91,7 +91,7 @@ function App() {
               )
             }
           />
-          <Route 
+          <Route
             path="/notes/new"
             element={<Rhymebook currentUser={currentUser} />}
           />
@@ -100,7 +100,12 @@ function App() {
             element={<NewUser handleCreateUser={handleCreateUser} />}
           />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/notes" element={<Notes currentUser={currentUser} handleAuth={handleAuth} />} />
+          <Route
+            path="/notes"
+            element={
+              <Notes currentUser={currentUser} handleAuth={handleAuth} />
+            }
+          />
           <Route
             path="/notes/:_id"
             element={<Rhymebook currentUser={currentUser} />}

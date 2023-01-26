@@ -146,7 +146,7 @@ function Rhymebook({ currentUser }) {
   const handleSaveNote = () => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      if (title !== "" && body !== "" && title !== undefined && body !== undefined) {
+      if (body !== "" && title !== undefined && body !== undefined) {
         addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', '1000', true, 'top')
         saveNote(title, body, activeNote._id).then((res) => {
           setActiveNote(res);
