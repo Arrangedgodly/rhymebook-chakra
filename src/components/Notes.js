@@ -1,4 +1,10 @@
-import { Wrap, WrapItem, Skeleton, useToast } from "@chakra-ui/react";
+import {
+  Wrap,
+  WrapItem,
+  Skeleton,
+  useToast,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { getNotes, deleteNote } from "../utils/api";
 import { useState, useEffect, useRef } from "react";
 import { PlusSquareIcon } from "@chakra-ui/icons";
@@ -13,6 +19,7 @@ function Notes({ currentUser, handleAuth }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const toast = useToast();
   const toastIdRef = useRef();
+  const bg = useColorModeValue("gray.400", "gray.800");
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
@@ -80,9 +87,9 @@ function Notes({ currentUser, handleAuth }) {
 
   useEffect(() => {
     if (!currentUser) {
-      handleAuth()
+      handleAuth();
     }
-  }, [])
+  }, []);
 
   return (
     <Skeleton
@@ -90,13 +97,17 @@ function Notes({ currentUser, handleAuth }) {
       fadeDuration={2}
       display="flex"
       flexDirection="row-reverse"
+      minH="87vh"
+      bg={bg}
     >
       <Wrap
         align="flex-start"
         justify="center"
         spacing="1vw"
         marginTop="3vh"
-        w="80vw"
+        w="78vw"
+        minH='87vh'
+        bg={bg}
       >
         {sortedList.length > 0
           ? sortedList.map((note) => (

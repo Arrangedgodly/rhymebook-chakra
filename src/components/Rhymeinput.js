@@ -19,18 +19,18 @@ function Rhymeinput({
   handleLastWordChange,
   onOpen,
   activeNote,
-  handleDeleteNoteTag
+  handleDeleteNoteTag,
 }) {
   const bg = useColorModeValue("gray.300", "gray.700");
 
   return (
-    <Flex direction="column" align="center" justify="center">
+    <Flex direction="column" align="center" justify="flex-start" w="55vw">
       <form className="Rhymebook-form">
         <FormControl>
           <FormLabel>Title</FormLabel>
           <Input
             type="text"
-            value={title || ''}
+            value={title || ""}
             onChange={handleTitleChange}
             bg={bg}
           />
@@ -39,8 +39,8 @@ function Rhymeinput({
           <FormLabel>Rhymes</FormLabel>
           <Textarea
             type="text"
-            h={380}
-            value={body || ''}
+            h="65vh"
+            value={body || ""}
             onChange={handleBodyChange}
             onKeyDown={handleLastWordChange}
             bg={bg}
@@ -57,7 +57,11 @@ function Rhymeinput({
               alignItems="center"
             >
               {tag.name}
-              <DeleteIcon opacity='0' _hover={{ opacity: '100' }} onClick={() => handleDeleteNoteTag(activeNote._id, tag._id)} />
+              <DeleteIcon
+                opacity="0"
+                _hover={{ opacity: "100" }}
+                onClick={() => handleDeleteNoteTag(activeNote._id, tag._id)}
+              />
             </Badge>
           ))}
       </HStack>

@@ -17,7 +17,7 @@ import {
   PopoverCloseButton,
   CardHeader,
   CardBody,
-  CardFooter
+  CardFooter,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -30,18 +30,20 @@ function Note({ note, activeTag, handleDeleteNote, handleTagClick }) {
     <WrapItem key={note._id} flexDirection="column" alignItems="Card">
       <Card
         boxSize="xs"
-        borderRadius="5%"
+        rounded='xl'
         flexDirection="column"
         justifyContent="space-around"
         size="md"
         variant="elevated"
         bg={bg}
       >
-        <CardHeader h="10%">
-          <Heading noOfLines={1} fontSize="xl">
-            {note.title}
-          </Heading>
-        </CardHeader>
+        {note.title && (
+          <CardHeader h="10%">
+            <Heading noOfLines={1} fontSize="xl">
+              {note.title}
+            </Heading>
+          </CardHeader>
+        )}
         <CardBody h="70%">
           <Text fontSize="sm" noOfLines={8}>
             {note.body}

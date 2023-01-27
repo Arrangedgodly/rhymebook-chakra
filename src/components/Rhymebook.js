@@ -19,7 +19,12 @@ import {
   deleteNoteTag,
 } from "../utils/api";
 import { getLastWord } from "../utils/constants";
-import { useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Flex,
+  useDisclosure,
+  useToast,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 function Rhymebook({ currentUser }) {
   const [activeNote, setActiveNote] = useState({});
@@ -41,16 +46,37 @@ function Rhymebook({ currentUser }) {
     currentUser.preferences;
   const toast = useToast();
   const toastIdRef = useRef();
+  const bg = useColorModeValue("gray.400", "gray.800");
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
-      toast.update(toastIdRef.current, { title , description, status, duration, isClosable })
+      toast.update(toastIdRef.current, {
+        title,
+        description,
+        status,
+        duration,
+        isClosable,
+      });
     }
-  }
+  };
 
-  const addToast = (title, description, status, duration, isClosable, position) => {
-    toastIdRef.current = toast({ title, description, status, duration, isClosable, position })
-  }
+  const addToast = (
+    title,
+    description,
+    status,
+    duration,
+    isClosable,
+    position
+  ) => {
+    toastIdRef.current = toast({
+      title,
+      description,
+      status,
+      duration,
+      isClosable,
+      position,
+    });
+  };
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -79,21 +105,25 @@ function Rhymebook({ currentUser }) {
   };
 
   const handleAddNoteTag = (name, color) => {
-    addToast('Adding Tag', 'Adding the tag to the active note...', 'info')
+    addToast("Adding Tag", "Adding the tag to the active note...", "info");
     addNoteTag(name, color, activeNote._id)
       .then((res) => {
         setActiveNote(res);
-        updateToast('Tag added successfully', '', 'success', '1000', true)
+        updateToast("Tag added successfully", "", "success", "1000", true);
       })
       .catch((err) => console.log(err));
   };
 
   const handleDeleteNoteTag = (noteId, tagId) => {
-    addToast('Removing Tag', 'Removing the tag from the active note...', 'info')
+    addToast(
+      "Removing Tag",
+      "Removing the tag from the active note...",
+      "info"
+    );
     deleteNoteTag(noteId, tagId)
       .then((res) => {
         setActiveNote(res);
-        updateToast('Tag removed successfully', '', 'success', '1000', true)
+        updateToast("Tag removed successfully", "", "success", "1000", true);
       })
       .catch((err) => console.log(err));
   };
@@ -147,14 +177,21 @@ function Rhymebook({ currentUser }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (body !== "" && title !== undefined && body !== undefined) {
-        addToast('Auto-saving...', 'Your progress is being automatically saved. Please wait...', 'info', '1000', true, 'top')
+        addToast(
+          "Auto-saving...",
+          "Your progress is being automatically saved. Please wait...",
+          "info",
+          "1000",
+          true,
+          "top"
+        );
         saveNote(title, body, activeNote._id).then((res) => {
           setActiveNote(res);
-          updateToast('Note auto-saved!', '', 'success', '1000', true, 'top')
+          updateToast("Note auto-saved!", "", "success", "1000", true, "top");
         });
       }
     }, 1000);
-  }
+  };
 
   useEffect(() => {
     if (_id) {
@@ -182,7 +219,7 @@ function Rhymebook({ currentUser }) {
   }, [activeNote]);
 
   return (
-    <>
+    <Flex bg={bg} minH="90vh">
       <Rhymeinput
         body={body}
         title={title}
@@ -209,7 +246,7 @@ function Rhymebook({ currentUser }) {
         onClose={onClose}
         handleAddNoteTag={handleAddNoteTag}
       />
-    </>
+    </Flex>
   );
 }
 

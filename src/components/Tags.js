@@ -1,14 +1,15 @@
-import { VStack, Badge, Heading } from "@chakra-ui/react";
-import { useState, useEffect } from 'react';
+import { VStack, Badge, Heading, useColorModeValue } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 function Tags({ notesList, handleTagClick, activeTag }) {
+  const bg = useColorModeValue("gray.200", "gray.900");
   const [sortedTags, setSortedTags] = useState();
   const sortTagsList = (array) => {
     let sortTags = [];
     for (let i = 0; i < array.length; i++) {
       const tags = array[i].tags;
       for (let j = 0; j < tags.length; j++) {
-        if (!sortTags.some(tag => tag.name === tags[j].name)) {
+        if (!sortTags.some((tag) => tag.name === tags[j].name)) {
           sortTags.push(tags[j]);
         }
       }
@@ -16,13 +17,34 @@ function Tags({ notesList, handleTagClick, activeTag }) {
     return sortTags;
   };
 
+  const checkTagLength = (str) => {
+    const characterLimit = 20;
+    if (str.length > characterLimit) {
+      str = str.substr(0, characterLimit) + "...";
+    }
+    return str;
+  };
+
   useEffect(() => {
-    setSortedTags(sortTagsList(notesList))
-  }, [notesList])
+    setSortedTags(sortTagsList(notesList));
+  }, [notesList]);
 
   return (
-    <VStack direction="column" align="center" w="20vw">
-      <Heading>Active Tags</Heading>
+    <VStack
+      direction="column"
+      align="center"
+      justify="center"
+      w="22vw"
+      bg={bg}
+      h="100vh"
+      position="fixed"
+      top="0"
+      left="0"
+      boxShadow='lg'
+    >
+      <Heading position="fixed" top="3vh">
+        Active Tags
+      </Heading>
       {sortedTags &&
         sortedTags.map((tag) => (
           <Badge
@@ -30,14 +52,14 @@ function Tags({ notesList, handleTagClick, activeTag }) {
             colorScheme={tag.color}
             key={tag._id}
             onClick={() => handleTagClick(tag.name)}
-            w="18vw"
+            w="20vw"
             h={50}
-            fontSize="1.85vw"
+            fontSize="1.45vw"
             display="flex"
             alignItems="center"
             justifyContent="center"
           >
-            {tag.name}
+            {checkTagLength(tag.name)}
           </Badge>
         ))}
     </VStack>
