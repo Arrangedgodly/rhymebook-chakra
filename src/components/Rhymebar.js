@@ -1,4 +1,5 @@
 import {
+  Skeleton,
   Table,
   Flex,
   Thead,
@@ -22,6 +23,15 @@ function Rhymebar({
   synonyms,
   antonyms,
   freqFollowers,
+  rhymesLoaded,
+  rhyLoaded,
+  sdlLoaded,
+  adjLoaded,
+  nounsLoaded,
+  wordsLoaded,
+  synLoaded,
+  antLoaded,
+  fqflLoaded,
 }) {
   const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl } = currentUser.preferences;
   const bg = useColorModeValue("gray.300", "gray.900");
@@ -34,56 +44,63 @@ function Rhymebar({
       justify="center"
       whiteSpace="wrap"
       w="45vw"
-      maxH='90vh'
-      position='sticky'
-      top='10vh'
-      right='0'
+      position="fixed"
+      top="10vh"
+      right="2vw"
     >
-      <Table variant="striped" size="lg">
-        <TableCaption placement="bottom" fontSize="xl">
+      <Table variant="striped" size="lg" w="40vw">
+        <TableCaption placement="bottom" fontSize="xl" marginBottom="3vh">
           Suggested Words
         </TableCaption>
         <Thead>
           <Tr>
-            {rhy && <Th fontSize="md">Rhymes</Th>}
-            {sdl && <Th fontSize="md">Sound Alikes</Th>}
-            {adj && <Th fontSize="md">Adjectives</Th>}
-            {noun && <Th fontSize="md">Nouns</Th>}
-            {rlwd && <Th fontSize="md">Related Words</Th>}
-            {syn && <Th fontSize="md">Synonyms</Th>}
-            {ant && <Th fontSize="md">Anotonyms</Th>}
-            {fqfl && <Th fontSize="md">Frequent Followers</Th>}
+            {rhy && rhymes.length > 0 && <Th fontSize="md">Rhymes</Th>}
+            {sdl && soundAlikes.length > 0 && (
+              <Th fontSize="md">Sound Alikes</Th>
+            )}
+            {adj && adjectives.length > 0 && <Th fontSize="md">Adjectives</Th>}
+            {noun && nouns.length > 0 && <Th fontSize="md">Nouns</Th>}
+            {rlwd && words.length > 0 && <Th fontSize="md">Related Words</Th>}
+            {syn && synonyms.length > 0 && <Th fontSize="md">Synonyms</Th>}
+            {ant && antonyms.length > 0 && <Th fontSize="md">Anotonyms</Th>}
+            {fqfl && freqFollowers.length > 0 && (
+              <Th fontSize="md">Frequent Followers</Th>
+            )}
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            {rhy && (
+            {rhy && rhymes.length > 0 && (
               <Td>
-                <Flex
-                  direction="column"
-                  justify="flex-start"
-                  align="flex-start"
-                >
-                  {rhymes.map((rhyme) => (
-                    <Text key={`rhyme-${rhyme.word}`}>{rhyme.word}</Text>
-                  ))}
-                </Flex>
+                <Skeleton isLoaded={rhyLoaded} fadeDuration={2}>
+                  <Flex
+                    direction="column"
+                    justify="flex-start"
+                    align="flex-start"
+                  >
+                    {rhymes.map((rhyme) => (
+                      <Text key={`rhyme-${rhyme.word}`}>{rhyme.word}</Text>
+                    ))}
+                  </Flex>
+                </Skeleton>
               </Td>
             )}
-            {sdl && (
+            {sdl && soundAlikes.length > 0 && (
               <Td>
-                <Flex
-                  direction="column"
-                  justify="flex-start"
-                  align="flex-start"
-                >
-                  {soundAlikes.map((sound) => (
-                    <Text key={`sound-${sound.word}`}>{sound.word}</Text>
-                  ))}
-                </Flex>
+                <Skeleton isLoaded={sdlLoaded} fadeDuration={2}>
+                  <Flex
+                    direction="column"
+                    justify="flex-start"
+                    align="flex-start"
+                  >
+                    {soundAlikes.map((sound) => (
+                      <Text key={`sound-${sound.word}`}>{sound.word}</Text>
+                    ))}
+                  </Flex>
+                </Skeleton>
               </Td>
             )}
-            {adj && (
+            {adj && adjectives.length > 0 && (
               <Td>
                 <Flex
                   direction="column"
@@ -96,7 +113,7 @@ function Rhymebar({
                 </Flex>
               </Td>
             )}
-            {noun && (
+            {noun && nouns.length > 0 && (
               <Td>
                 <Flex
                   direction="column"
@@ -109,7 +126,7 @@ function Rhymebar({
                 </Flex>
               </Td>
             )}
-            {rlwd && (
+            {rlwd && words.length > 0 && (
               <Td>
                 <Flex
                   direction="column"
@@ -122,7 +139,7 @@ function Rhymebar({
                 </Flex>
               </Td>
             )}
-            {syn && (
+            {syn && synonyms.length > 0 && (
               <Td>
                 <Flex
                   direction="column"
@@ -135,7 +152,7 @@ function Rhymebar({
                 </Flex>
               </Td>
             )}
-            {ant && (
+            {ant && antonyms.length > 0 && (
               <Td>
                 <Flex
                   direction="column"
@@ -148,7 +165,7 @@ function Rhymebar({
                 </Flex>
               </Td>
             )}
-            {fqfl && (
+            {fqfl && freqFollowers.length > 0 && (
               <Td>
                 <Flex
                   direction="column"

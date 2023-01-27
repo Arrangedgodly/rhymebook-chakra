@@ -34,19 +34,28 @@ function Rhymebook({ currentUser }) {
   const [lastWord, setLastWord] = useState("");
   const timer = useRef(null);
   const [rhymes, setRhymes] = useState([]);
+  const [rhyLoaded, setRhyLoaded] = useState(false);
   const [soundAlikes, setSoundAlikes] = useState([]);
+  const [sdlLoaded, setSDLLoaded] = useState(false);
   const [adjectives, setAdjectives] = useState([]);
+  const [adjLoaded, setAdjLoaded] = useState(false);
   const [nouns, setNouns] = useState([]);
+  const [nounsLoaded, setNounsLoaded] = useState([]);
   const [words, setWords] = useState([]);
+  const [wordsLoaded, setWordsLoaded] = useState(false);
   const [synonyms, setSynonyms] = useState([]);
+  const [synLoaded, setSynLoaded] = useState(false);
   const [antonyms, setAntonyms] = useState([]);
+  const [antLoaded, setAntLoaded] = useState(false);
   const [freqFollowers, setFreqFollowers] = useState([]);
+  const [fqflLoaded, setFQFLLoaded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max } =
     currentUser.preferences;
   const toast = useToast();
   const toastIdRef = useRef();
   const bg = useColorModeValue("gray.400", "gray.800");
+  const [rhymesLoaded, setRhymesLoaded] = useState(false);
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
@@ -128,46 +137,83 @@ function Rhymebook({ currentUser }) {
       .catch((err) => console.log(err));
   };
 
+  const resetTableState = () => {
+    setRhyLoaded(false);
+    setSDLLoaded(false);
+    setAdjLoaded(false);
+    setNounsLoaded(false);
+    setWordsLoaded(false);
+    setSynLoaded(false);
+    setAntLoaded(false);
+    setFQFLLoaded(false);
+    setRhymesLoaded(false);
+  }
+
   const handleAPICalls = () => {
+    resetTableState();
     if (lastWord !== "") {
       if (rhy) {
         getRhyme(lastWord, engine, title, max)
-          .then((res) => setRhymes(res))
+          .then((res) => {
+            setRhymes(res)
+            setRhyLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (sdl) {
         getSoundAlike(lastWord, engine, title, max)
-          .then((res) => setSoundAlikes(res))
+          .then((res) => {
+            setSoundAlikes(res)
+            setSDLLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (adj) {
         getRelatedAdjectives(lastWord, engine, title, max)
-          .then((res) => setAdjectives(res))
+          .then((res) => {
+            setAdjectives(res)
+            setAdjLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (noun) {
         getRelatedNouns(lastWord, engine, title, max)
-          .then((res) => setNouns(res))
+          .then((res) => {
+            setNouns(res)
+            setNounsLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (rlwd) {
         getRelatedWords(lastWord, engine, title, max)
-          .then((res) => setWords(res))
+          .then((res) => {
+            setWords(res)
+            setWordsLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (syn) {
         getSynonyms(lastWord, engine, title, max)
-          .then((res) => setSynonyms(res))
+          .then((res) => {
+            setSynonyms(res)
+            setSynLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (ant) {
         getAntonyms(lastWord, engine, title, max)
-          .then((res) => setAntonyms(res))
+          .then((res) => {
+            setAntonyms(res)
+            setAntLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
       if (fqfl) {
         getFrequentFollowers(lastWord, engine, title, max)
-          .then((res) => setFreqFollowers(res))
+          .then((res) => {
+            setFreqFollowers(res)
+            setFQFLLoaded(true)
+          })
           .catch((err) => console.log(err));
       }
     }
@@ -240,6 +286,15 @@ function Rhymebook({ currentUser }) {
         synonyms={synonyms}
         antonyms={antonyms}
         freqFollowers={freqFollowers}
+        rhymesLoaded={rhymesLoaded}
+        rhyLoaded={rhyLoaded}
+        sdlLoaded={sdlLoaded}
+        adjLoaded={adjLoaded}
+        nounsLoaded={nounsLoaded}
+        wordsLoaded={wordsLoaded}
+        synLoaded={synLoaded}
+        antLoaded={antLoaded}
+        fqflLoaded={fqflLoaded}
       />
       <Rhymetags
         isOpen={isOpen}

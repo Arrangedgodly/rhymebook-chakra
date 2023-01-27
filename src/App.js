@@ -73,7 +73,7 @@ function App() {
   }, [loggedIn]);
 
   return (
-    <>
+    <div style={{ scrollbarWidth: "none", msOverflowStyle: 'none' }}>
       <Header
         loggedIn={loggedIn}
         currentUser={currentUser}
@@ -118,7 +118,7 @@ function App() {
           />
         </Routes>
       </Skeleton>
-    </>
+    </div>
   );
 }
 
