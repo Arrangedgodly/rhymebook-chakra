@@ -18,25 +18,50 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
+  Icon,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
+import { useState } from "react";
 
-function Note({ note, activeTag, handleDeleteNote, handleTagClick }) {
+function Note({
+  note,
+  activeTag,
+  handleDeleteNote,
+  handleTagClick,
+  handleCardSelectChange,
+}) {
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
   const deleteColor = useColorModeValue("red.500", "red.300");
+
+  const [cardSelected, setCardSelected] = useState(false);
+
+  const handleCardSelect = () => {
+    setCardSelected(!cardSelected);
+    handleCardSelectChange(note._id);
+  };
+
   return (
     <WrapItem key={note._id} flexDirection="column" alignItems="Card">
       <Card
         boxSize="xs"
-        rounded='xl'
+        rounded="xl"
         flexDirection="column"
         justifyContent="space-around"
         size="md"
         variant="elevated"
         bg={bg}
       >
+        <Icon
+          as={cardSelected ? FaCheckCircle : FaRegCheckCircle}
+          position="relative"
+          top="1vh"
+          left="1vh"
+          onClick={handleCardSelect}
+          boxSize={25}
+        />
         {note.title && (
           <CardHeader h="10%">
             <Heading noOfLines={1} fontSize="xl">

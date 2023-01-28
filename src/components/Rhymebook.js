@@ -55,7 +55,6 @@ function Rhymebook({ currentUser }) {
   const toast = useToast();
   const toastIdRef = useRef();
   const bg = useColorModeValue("gray.400", "gray.800");
-  const [rhymesLoaded, setRhymesLoaded] = useState(false);
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
@@ -146,7 +145,6 @@ function Rhymebook({ currentUser }) {
     setSynLoaded(false);
     setAntLoaded(false);
     setFQFLLoaded(false);
-    setRhymesLoaded(false);
   }
 
   const handleAPICalls = () => {
@@ -286,7 +284,6 @@ function Rhymebook({ currentUser }) {
         synonyms={synonyms}
         antonyms={antonyms}
         freqFollowers={freqFollowers}
-        rhymesLoaded={rhymesLoaded}
         rhyLoaded={rhyLoaded}
         sdlLoaded={sdlLoaded}
         adjLoaded={adjLoaded}

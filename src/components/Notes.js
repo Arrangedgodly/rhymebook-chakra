@@ -1,6 +1,8 @@
 import {
   Wrap,
   WrapItem,
+  HStack,
+  Button,
   Skeleton,
   useToast,
   useColorModeValue,
@@ -15,11 +17,22 @@ import Tags from "./Tags";
 function Notes({ currentUser, handleAuth }) {
   const [notesList, setNotesList] = useState([]);
   const [sortedList, setSortedList] = useState([]);
+  const [selectedNotes, setSelectedNotes] = useState([]);
   const [activeTag, setActiveTag] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const toast = useToast();
   const toastIdRef = useRef();
   const bg = useColorModeValue("gray.400", "gray.800");
+
+  const handleCardSelectChange = (id) => {
+    if (selectedNotes.includes(id)) {
+      setSelectedNotes((selectedNotes) =>
+        selectedNotes.filter((note) => note !== id)
+      );
+    } else {
+      setSelectedNotes((selectedNotes) => [...selectedNotes, id]);
+    }
+  };
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
@@ -106,9 +119,24 @@ function Notes({ currentUser, handleAuth }) {
         spacing="1vw"
         marginTop="3vh"
         w="78vw"
-        minH='87vh'
+        minH="87vh"
         bg={bg}
       >
+        {selectedNotes.length > 0 && (
+          <HStack
+            w="100%"
+            align="center"
+            justify="center"
+            position="fixed"
+            bottom="0"
+            zIndex="2"
+          >
+            <Button boxShadow="dark-lg" colorScheme='purple'>
+              Add Tags
+            </Button>
+            <Button boxShadow="dark-lg" colorScheme='red'>Delete Cards</Button>
+          </HStack>
+        )}
         {sortedList.length > 0
           ? sortedList.map((note) => (
               <Note
@@ -117,6 +145,7 @@ function Notes({ currentUser, handleAuth }) {
                 handleDeleteNote={handleDeleteNote}
                 handleTagClick={handleTagClick}
                 key={note._id}
+                handleCardSelectChange={handleCardSelectChange}
               />
             ))
           : notesList.map((note) => (
@@ -126,6 +155,7 @@ function Notes({ currentUser, handleAuth }) {
                 handleDeleteNote={handleDeleteNote}
                 handleTagClick={handleTagClick}
                 key={note._id}
+                handleCardSelectChange={handleCardSelectChange}
               />
             ))}
         <WrapItem w="100%" display="flex" justifyContent="center">
