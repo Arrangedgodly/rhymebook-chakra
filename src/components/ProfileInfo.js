@@ -55,14 +55,15 @@ function ProfileInfo({ currentUser, handleAuth }) {
             <EditableInput onChange={handleNameChange} />
           </Editable>
         </Flex>
-        <Flex direction="column" align="center" justify="center" maxW="50%">
+        <Flex direction="column" align="center" justify="center" maxW='50%'>
           <FormLabel fontSize="2xl">Avatar</FormLabel>
           <Editable
             defaultValue={avatar}
             placeholder="Submit a URL for your Avatar"
             fontSize="lg"
+            noOfLines={2}
           >
-            <EditablePreview />
+            <EditablePreview noOfLines={2} />
             <EditableInput onChange={handleAvatarChange} />
           </Editable>
         </Flex>
