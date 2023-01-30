@@ -40,7 +40,7 @@ function Tags({ notesList, handleTagClick, activeTag }) {
       position="fixed"
       top="0"
       left="0"
-      boxShadow='lg'
+      boxShadow="lg"
     >
       <Heading position="fixed" top="3vh">
         Active Tags

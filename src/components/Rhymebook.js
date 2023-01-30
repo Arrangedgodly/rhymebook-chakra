@@ -145,7 +145,7 @@ function Rhymebook({ currentUser }) {
     setSynLoaded(false);
     setAntLoaded(false);
     setFQFLLoaded(false);
-  }
+  };
 
   const handleAPICalls = () => {
     resetTableState();
@@ -153,64 +153,64 @@ function Rhymebook({ currentUser }) {
       if (rhy) {
         getRhyme(lastWord, engine, title, max)
           .then((res) => {
-            setRhymes(res)
-            setRhyLoaded(true)
+            setRhymes(res);
+            setRhyLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (sdl) {
         getSoundAlike(lastWord, engine, title, max)
           .then((res) => {
-            setSoundAlikes(res)
-            setSDLLoaded(true)
+            setSoundAlikes(res);
+            setSDLLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (adj) {
         getRelatedAdjectives(lastWord, engine, title, max)
           .then((res) => {
-            setAdjectives(res)
-            setAdjLoaded(true)
+            setAdjectives(res);
+            setAdjLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (noun) {
         getRelatedNouns(lastWord, engine, title, max)
           .then((res) => {
-            setNouns(res)
-            setNounsLoaded(true)
+            setNouns(res);
+            setNounsLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (rlwd) {
         getRelatedWords(lastWord, engine, title, max)
           .then((res) => {
-            setWords(res)
-            setWordsLoaded(true)
+            setWords(res);
+            setWordsLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (syn) {
         getSynonyms(lastWord, engine, title, max)
           .then((res) => {
-            setSynonyms(res)
-            setSynLoaded(true)
+            setSynonyms(res);
+            setSynLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (ant) {
         getAntonyms(lastWord, engine, title, max)
           .then((res) => {
-            setAntonyms(res)
-            setAntLoaded(true)
+            setAntonyms(res);
+            setAntLoaded(true);
           })
           .catch((err) => console.log(err));
       }
       if (fqfl) {
         getFrequentFollowers(lastWord, engine, title, max)
           .then((res) => {
-            setFreqFollowers(res)
-            setFQFLLoaded(true)
+            setFreqFollowers(res);
+            setFQFLLoaded(true);
           })
           .catch((err) => console.log(err));
       }

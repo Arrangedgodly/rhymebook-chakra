@@ -23,8 +23,8 @@ import {
 import { Link } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
-import { BsPin, BsPinFill } from 'react-icons/bs';
-import { useState } from "react";
+import { BsPin, BsPinFill } from "react-icons/bs";
+import { useState, useEffect } from "react";
 
 function Note({
   note,
@@ -32,18 +32,38 @@ function Note({
   handleDeleteNote,
   handleTagClick,
   handleCardSelectChange,
+  handlePinAdd,
+  handlePinDelete,
+  selectedNotes
 }) {
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
   const deleteColor = useColorModeValue("red.500", "red.300");
-  const select = useColorModeValue('gray.50', 'gray.900');
+  const select = useColorModeValue("gray.50", "gray.900");
 
   const [cardSelected, setCardSelected] = useState(false);
+  const [pinSelected, setPinSelected] = useState(note.pinned);
 
   const handleCardSelect = () => {
     setCardSelected(!cardSelected);
     handleCardSelectChange(note._id);
   };
+
+  const handlePinSelect = () => {
+    if (pinSelected) {
+      handlePinDelete(note._id);
+      setPinSelected(false);
+    } else {
+      handlePinAdd(note._id);
+      setPinSelected(true);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedNotes.includes(note._id)) {
+      setCardSelected(true)
+    }
+  }, [selectedNotes])
 
   return (
     <WrapItem key={note._id} flexDirection="column" alignItems="Card">
@@ -54,7 +74,7 @@ function Note({
         justifyContent="space-around"
         size="md"
         variant="elevated"
-        position='relative'
+        position="relative"
         bg={bg}
       >
         <Icon
@@ -66,15 +86,24 @@ function Note({
           boxSize={25}
           _hover={{ color: select }}
         />
+        <Icon
+          as={pinSelected ? BsPinFill : BsPin}
+          position="absolute"
+          top="1vh"
+          right="1vh"
+          boxSize={25}
+          onClick={handlePinSelect}
+          _hover={{ color: select }}
+        />
         {note.title && (
           <CardHeader h="10%">
-            <Heading noOfLines={1} fontSize="xl" maxW='90%'>
+            <Heading noOfLines={1} fontSize="xl" maxW="90%">
               {note.title}
             </Heading>
           </CardHeader>
         )}
         <CardBody h="70%">
-          <Text fontSize="sm" noOfLines={8}>
+          <Text fontSize="sm" noOfLines={8} maxW="90%" margin="auto">
             {note.body}
           </Text>
         </CardBody>

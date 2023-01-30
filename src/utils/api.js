@@ -1,6 +1,7 @@
-const baseUrl = process.env.NODE_ENV === 'production' 
-? 'https://api.rhymebook.graydonwasil.com'
-: 'http://localhost:3001';
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.rhymebook.graydonwasil.com"
+    : "http://localhost:3001";
 const rhymeUrl = "https://api.datamuse.com/words";
 
 function checkResponse(res) {
@@ -67,17 +68,37 @@ const addNoteTag = (name, color, id) => {
     },
     body: JSON.stringify({ tag }),
   }).then(checkResponse);
-}
+};
 
 const deleteNoteTag = (noteId, tagId) => {
   return fetch(`${baseUrl}/notes/${noteId}/tags/${tagId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
   }).then(checkResponse);
-}
+};
+
+const addNotePin = (id) => {
+  return fetch(`${baseUrl}/notes/${id}/pin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+  }).then(checkResponse);
+};
+
+const deleteNotePin = (id) => {
+  return fetch(`${baseUrl}/notes/${id}/pin`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+  }).then(checkResponse);
+};
 
 const login = (email, password) => {
   return fetch(`${baseUrl}/signin`, {
@@ -145,17 +166,15 @@ const updatePref = (rhy, sdl, adj, noun, rlwd, syn, ant, fqfl, engine, max) => {
 };
 
 const updateInfo = (name, avatar, email) => {
-  return fetch(
-    `${baseUrl}/users/me/info`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
-      body: JSON.stringify({ name, avatar, email })
-    }
-  ).then(checkResponse);
-}
+  return fetch(`${baseUrl}/users/me/info`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify({ name, avatar, email }),
+  }).then(checkResponse);
+};
 
 const getRhyme = (word, engine, topic, max) => {
   return fetch(
@@ -213,6 +232,8 @@ export {
   saveNote,
   addNoteTag,
   deleteNoteTag,
+  addNotePin,
+  deleteNotePin,
   login,
   checkAuth,
   createUser,
@@ -226,5 +247,5 @@ export {
   getFrequentFollowers,
   getSynonyms,
   updatePref,
-  updateInfo
+  updateInfo,
 };

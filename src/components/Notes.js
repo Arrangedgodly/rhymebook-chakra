@@ -14,17 +14,21 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
-import { getNotes, deleteNote } from "../utils/api";
+import { getNotes, deleteNote, addNotePin, deleteNotePin, addNoteTag } from "../utils/api";
 import { useState, useEffect, useRef } from "react";
 import { PlusSquareIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import Note from "./Note";
 import Tags from "./Tags";
+import Rhymetags from "./Rhymetags";
 
 function Notes({ currentUser, handleAuth }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [notesList, setNotesList] = useState([]);
   const [sortedList, setSortedList] = useState([]);
+  const [pinnedList, setPinnedList] = useState([]);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [activeTag, setActiveTag] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,6 +45,29 @@ function Notes({ currentUser, handleAuth }) {
       setSelectedNotes((selectedNotes) => [...selectedNotes, id]);
     }
   };
+
+  const handlePinAdd = (id) => {
+    addNotePin(id)
+      .then(note => {
+        const index = notesList.findIndex(item => item._id === note._id);
+        console.log(index);
+        const array = notesList;
+        console.log(array);
+        array.splice(index, 1, note);
+        console.log(array);
+        setNotesList(array)
+      })
+  }
+
+  const handlePinDelete = (id) => {
+    deleteNotePin(id)
+      .then(note => {
+        const index = notesList.findIndex(item => item._id === note._id);
+        const array = notesList;
+        array.splice(index, 1, note);
+        setNotesList(array)
+      })
+  }
 
   const updateToast = (title, description, status, duration, isClosable) => {
     if (toastIdRef.current) {
@@ -98,6 +125,21 @@ function Notes({ currentUser, handleAuth }) {
     updateToast("Notes removed successfully!", "", "success", "2000", true);
   };
 
+  const handleAddNoteTag = (name, color) => {
+    addToast(
+      'Adding Note Tags...',
+      `Tags Added: 0 / ${selectedNotes.length}`,
+      'info'
+    );
+    for (let i = 0; i < selectedNotes.length; i++) {
+      addNoteTag(name, color, selectedNotes[i])
+        .then(note => {
+          setNotesList(notesList => notesList.filter(item => item._id !== selectedNotes[i]))
+          setNotesList(notesList => [...notesList, note])
+        })
+    }
+  }
+
   const handleTagClick = (name) => {
     if (activeTag !== name) {
       setActiveTag(name);
@@ -119,6 +161,10 @@ function Notes({ currentUser, handleAuth }) {
   useEffect(() => {
     resetNotes();
   }, []);
+
+  useEffect(() => {
+    setPinnedList(notesList.filter(note => note.pinned === true))
+  }, [notesList])
 
   useEffect(() => {
     if (activeTag === "") {
@@ -165,7 +211,7 @@ function Notes({ currentUser, handleAuth }) {
             bottom="0"
             zIndex="2"
           >
-            <Button boxShadow="dark-lg" colorScheme="purple">
+            <Button boxShadow="dark-lg" colorScheme="purple" onClick={onOpen}>
               Add Tags
             </Button>
             <Popover>
@@ -191,6 +237,19 @@ function Notes({ currentUser, handleAuth }) {
             </Popover>
           </HStack>
         )}
+        {pinnedList.length > 0 && pinnedList.map((note) => (
+          <Note
+          note={note}
+          activeTag={activeTag}
+          handleDeleteNote={handleDeleteNote}
+          handleTagClick={handleTagClick}
+          key={note._id}
+          handleCardSelectChange={handleCardSelectChange}
+          handlePinAdd={handlePinAdd}
+          handlePinDelete={handlePinDelete}
+          selectedNotes={selectedNotes}
+        />
+        ))}
         {sortedList.length > 0
           ? sortedList.map((note) => (
               <Note
@@ -200,9 +259,12 @@ function Notes({ currentUser, handleAuth }) {
                 handleTagClick={handleTagClick}
                 key={note._id}
                 handleCardSelectChange={handleCardSelectChange}
+                handlePinAdd={handlePinAdd}
+                handlePinDelete={handlePinDelete}
+                selectedNotes={selectedNotes}
               />
             ))
-          : notesList.map((note) => (
+          : notesList.filter(item => item.pinned === false).map((note) => (
               <Note
                 note={note}
                 activeTag={activeTag}
@@ -210,6 +272,9 @@ function Notes({ currentUser, handleAuth }) {
                 handleTagClick={handleTagClick}
                 key={note._id}
                 handleCardSelectChange={handleCardSelectChange}
+                handlePinAdd={handlePinAdd}
+                handlePinDelete={handlePinDelete}
+                selectedNotes={selectedNotes}
               />
             ))}
         <WrapItem w="100%" display="flex" justifyContent="center">
@@ -225,8 +290,14 @@ function Notes({ currentUser, handleAuth }) {
       </Wrap>
       <Tags
         notesList={notesList}
+        pinnedList={pinnedList}
         handleTagClick={handleTagClick}
         activeTag={activeTag}
+      />
+      <Rhymetags
+        isOpen={isOpen}
+        onClose={onClose}
+        handleAddNoteTag={handleAddNoteTag}
       />
     </Skeleton>
   );
