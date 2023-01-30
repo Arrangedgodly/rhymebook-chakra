@@ -72,21 +72,22 @@ function Notes({ currentUser, handleAuth }) {
       .catch((err) => console.log(err));
   };
 
-  const handleDeleteNotes = (array) => {
+  const handleDeleteNotes = () => {
     addToast(
       "Deleting Notes...",
-      `Notes Deleted: 0 / ${array.length + 1}`,
+      `Notes Deleted: 0 / ${selectedNotes.length}`,
       "info"
     );
-    for (let i = 0; i < array.length; i++) {
-      deleteNote(array[i])
+    for (let i = 0; i < selectedNotes.length; i++) {
+      deleteNote(selectedNotes[i])
         .then((card) => {
           setNotesList((notesList) =>
-            notesList.filter((c) => c._id !== card.id)
+            notesList.filter((c) => c._id !== card._id)
           );
+          setSelectedNotes(selectedNotes => selectedNotes.filter(c => c !== card._id))
           updateToast(
             "Deleting Notes...",
-            `Notes Deleted: ${i} / ${array.length + 1}`,
+            `Notes Deleted: ${i + 1} / ${selectedNotes.length}`,
             "info",
             "1000",
             false
@@ -182,7 +183,7 @@ function Notes({ currentUser, handleAuth }) {
                   can not be reversed!
                 </PopoverBody>
                 <PopoverFooter>
-                  <Button onClick={() => handleDeleteNotes(selectedNotes)}>
+                  <Button onClick={() => handleDeleteNotes()}>
                     Confirm
                   </Button>
                 </PopoverFooter>

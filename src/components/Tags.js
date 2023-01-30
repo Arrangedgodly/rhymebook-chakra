@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Tags({ notesList, handleTagClick, activeTag }) {
   const bg = useColorModeValue("gray.200", "gray.900");
-  const [sortedTags, setSortedTags] = useState();
+  const [sortedTags, setSortedTags] = useState([]);
   const sortTagsList = (array) => {
     let sortTags = [];
     for (let i = 0; i < array.length; i++) {

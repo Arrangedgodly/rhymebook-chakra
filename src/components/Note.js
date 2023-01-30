@@ -23,6 +23,7 @@ import {
 import { Link } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
+import { BsPin, BsPinFill } from 'react-icons/bs';
 import { useState } from "react";
 
 function Note({
@@ -35,6 +36,7 @@ function Note({
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
   const deleteColor = useColorModeValue("red.500", "red.300");
+  const select = useColorModeValue('gray.50', 'gray.900');
 
   const [cardSelected, setCardSelected] = useState(false);
 
@@ -52,19 +54,21 @@ function Note({
         justifyContent="space-around"
         size="md"
         variant="elevated"
+        position='relative'
         bg={bg}
       >
         <Icon
           as={cardSelected ? FaCheckCircle : FaRegCheckCircle}
-          position="relative"
+          position="absolute"
           top="1vh"
           left="1vh"
           onClick={handleCardSelect}
           boxSize={25}
+          _hover={{ color: select }}
         />
         {note.title && (
           <CardHeader h="10%">
-            <Heading noOfLines={1} fontSize="xl">
+            <Heading noOfLines={1} fontSize="xl" maxW='90%'>
               {note.title}
             </Heading>
           </CardHeader>

@@ -24,7 +24,7 @@ function App() {
   const handleCreateUser = (name, avatar, email, password) => {
     createUser(name, avatar, email, password)
       .then(() => {
-        navigate('/login')
+        navigate("/login");
       })
       .catch((err) => console.log(err));
   };
@@ -73,51 +73,54 @@ function App() {
   }, [loggedIn]);
 
   return (
-    <div style={{ scrollbarWidth: "none", msOverflowStyle: 'none' }}>
+    <div style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
       <Header
         loggedIn={loggedIn}
         currentUser={currentUser}
         handleLogout={handleLogout}
       />
-      <Skeleton className="App" isLoaded={!isLoading}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              loggedIn ? (
-                <Rhymebook currentUser={currentUser} />
-              ) : (
-                <Welcome handleButtonClick={handleButtonClick} />
-              )
-            }
-          />
-          <Route
-            path="/notes/new"
-            element={<Rhymebook currentUser={currentUser} />}
-          />
-          <Route
-            path="/new-user"
-            element={<NewUser handleCreateUser={handleCreateUser} />}
-          />
-          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route
-            path="/notes"
-            element={
-              <Notes currentUser={currentUser} handleAuth={handleAuth} />
-            }
-          />
-          <Route
-            path="/notes/:_id"
-            element={<Rhymebook currentUser={currentUser} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              <Profile currentUser={currentUser} handleAuth={handleAuth} />
-            }
-          />
-        </Routes>
-      </Skeleton>
+        <Skeleton className="App" isLoaded={!isLoading}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                loggedIn ? (
+                  <Rhymebook currentUser={currentUser} />
+                ) : (
+                  <Welcome handleButtonClick={handleButtonClick} />
+                )
+              }
+            />
+            <Route
+              path="/notes/new"
+              element={<Rhymebook currentUser={currentUser} />}
+            />
+            <Route
+              path="/new-user"
+              element={<NewUser handleCreateUser={handleCreateUser} />}
+            />
+            <Route
+              path="/login"
+              element={<Login handleLogin={handleLogin} />}
+            />
+            <Route
+              path="/notes"
+              element={
+                <Notes currentUser={currentUser} handleAuth={handleAuth} />
+              }
+            />
+            <Route
+              path="/notes/:_id"
+              element={<Rhymebook currentUser={currentUser} />}
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile currentUser={currentUser} handleAuth={handleAuth} />
+              }
+            />
+          </Routes>
+        </Skeleton>
     </div>
   );
 }
