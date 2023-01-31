@@ -1,6 +1,7 @@
 import {
   Card,
   Heading,
+  VStack,
   HStack,
   WrapItem,
   Text,
@@ -34,7 +35,7 @@ function Note({
   handleCardSelectChange,
   handlePinAdd,
   handlePinDelete,
-  selectedNotes
+  selectedNotes,
 }) {
   const bg = useColorModeValue("gray.300", "gray.500");
   const edit = useColorModeValue("yellow.500", "yellow.300");
@@ -61,9 +62,9 @@ function Note({
 
   useEffect(() => {
     if (selectedNotes.includes(note._id)) {
-      setCardSelected(true)
+      setCardSelected(true);
     }
-  }, [selectedNotes])
+  }, [selectedNotes]);
 
   return (
     <WrapItem key={note._id} flexDirection="column" alignItems="Card">
@@ -97,7 +98,7 @@ function Note({
         />
         {note.title && (
           <CardHeader h="10%">
-            <Heading noOfLines={1} fontSize="xl" maxW="90%">
+            <Heading noOfLines={1} fontSize="xl" maxW="90%" margin='auto'>
               {note.title}
             </Heading>
           </CardHeader>
@@ -107,8 +108,8 @@ function Note({
             {note.body}
           </Text>
         </CardBody>
-        <CardFooter h="20%">
-          <HStack w="100%" justify="center">
+        <CardFooter h="20%" padding="2">
+          <HStack w="100%" justify="center" margin="0">
             <Link to={`/notes/${note._id}`}>
               <EditIcon
                 color={edit}
@@ -142,6 +143,23 @@ function Note({
               </PopoverContent>
             </Popover>
           </HStack>
+          <Text
+            position="absolute"
+            fontSize="xs"
+            right="2"
+            bottom="2"
+            maxW="30%"
+          >
+            {note.lastEdited
+              ? `Last Edited: ${new Date(note.lastEdited).toLocaleString(
+                  "en-US",
+                  { timeZone: "UTC" }
+                )}`
+              : `Created: ${new Date(note.created).toLocaleString(
+                "en-US",
+                { timeZone: "UTC" }
+              )}`}
+          </Text>
         </CardFooter>
       </Card>
       {note.tags && (

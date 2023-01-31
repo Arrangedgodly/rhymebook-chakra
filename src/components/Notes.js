@@ -2,6 +2,7 @@ import {
   Wrap,
   WrapItem,
   HStack,
+  Heading,
   Button,
   Skeleton,
   useToast,
@@ -237,7 +238,8 @@ function Notes({ currentUser, handleAuth }) {
           </HStack>
         )}
         {sortedList.length === 0 && pinnedList.length > 0 && (
-        <Wrap w="78vw" marginBottom="3vh" justify="center">
+        <Wrap w="78vw" marginBottom="3vh" spacing='1vh' justify="center">
+          <Heading w='100%' size='md'>Pinned</Heading>
           {pinnedList.map((note) => (
             <Note
               note={note}
@@ -253,6 +255,7 @@ function Notes({ currentUser, handleAuth }) {
           ))}
         </Wrap>
       )}
+      <Heading w='100%' size='md'>Notes</Heading>
         {sortedList.length > 0
           ? sortedList.map((note) => (
               <Note
