@@ -33,14 +33,11 @@ import Note from "./Note";
 import Tags from "./Tags";
 import Rhymetags from "./Rhymetags";
 import { BsFilter } from "react-icons/bs";
-import {
-  TbSortAscendingLetters,
-  TbSortDescendingLetters,
-} from "react-icons/tb";
 
 function Notes({ currentUser, handleAuth }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [notesList, setNotesList] = useState([]);
+  const [sortType, setSortType] = useState('');
   const [sortedList, setSortedList] = useState([]);
   const [pinnedList, setPinnedList] = useState([]);
   const [selectedNotes, setSelectedNotes] = useState([]);
@@ -181,6 +178,65 @@ function Notes({ currentUser, handleAuth }) {
       .catch((err) => console.log(err));
   };
 
+  const handleSortNotes = (e) => {
+    if (e.target.value === 'newest' || e.target.value === '') {
+      setSortType('newest');
+    } else if (e.target.value === 'oldest') {
+      setSortType('oldest');
+    } else if (e.target.value ===  'alph') {
+      setSortType('alph');
+    } else if (e.target.value === 'revAlph') {
+      setSortType('revAlph');
+    }
+  }
+
+  useEffect(() => {
+    if (sortType === 'newest') {
+      setNotesList(notesList => notesList.sort((a, b) => {
+        if (a.lastEdited > b.lastEdited) {
+          return 1;
+        }
+        if (b.lastEdited > a.lastEdited) {
+          return -1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'oldest') {
+      setNotesList(notesList => notesList.sort((a, b) => {
+        if (a.lastEdited > b.lastEdited) {
+          return -1;
+        }
+        if (b.lastEdited > a.lastEdited) {
+          return 1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'alph') {
+      setNotesList(notesList => notesList.sort((a, b) => {
+        if (a.title > b.title) {
+          return -1;
+        }
+        if (b.title > a.title) {
+          return 1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'revAlph') {
+      setNotesList(notesList => notesList.sort((a, b) => {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (b.title > a.title) {
+          return -1;
+        }
+        return 0;
+      }))
+    }
+  }, [sortType])
+
   useEffect(() => {
     resetNotes();
   }, []);
@@ -230,6 +286,7 @@ function Notes({ currentUser, handleAuth }) {
           placeholder="Filter Notes"
           maxW="30vw"
           size="lg"
+          onChange={handleSortNotes}
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
