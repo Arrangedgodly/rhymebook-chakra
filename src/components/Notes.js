@@ -3,6 +3,8 @@ import {
   WrapItem,
   HStack,
   Heading,
+  Select,
+  Icon,
   Button,
   Skeleton,
   useToast,
@@ -27,10 +29,14 @@ import {
 } from "../utils/api";
 import { useState, useEffect, useRef } from "react";
 import { PlusSquareIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
 import Note from "./Note";
 import Tags from "./Tags";
 import Rhymetags from "./Rhymetags";
+import { BsFilter } from "react-icons/bs";
+import {
+  TbSortAscendingLetters,
+  TbSortDescendingLetters,
+} from "react-icons/tb";
 
 function Notes({ currentUser, handleAuth }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,17 +92,17 @@ function Notes({ currentUser, handleAuth }) {
 
   const handleAddNote = () => {
     addToast(
-      'Adding New Note...',
-      'Adding the new note to your database. Please wait...',
-      'info'
+      "Adding New Note...",
+      "Adding the new note to your database. Please wait...",
+      "info"
     );
     createNote()
-      .then(note => {
-        setNotesList(notesList => [...notesList, note])
-        updateToast('Note successfully added!', '', 'success', '1000', true);
+      .then((note) => {
+        setNotesList((notesList) => [...notesList, note]);
+        updateToast("Note successfully added!", "", "success", "1000", true);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   const handleDeleteNote = (id) => {
     addToast(
@@ -219,6 +225,17 @@ function Notes({ currentUser, handleAuth }) {
         minH="87vh"
         bg={bg}
       >
+        <Select
+          icon={<Icon as={BsFilter} />}
+          placeholder="Filter Notes"
+          maxW="30vw"
+          size="lg"
+        >
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="alph">A-Z</option>
+          <option value="revAlph">Z-A</option>
+        </Select>
         {selectedNotes.length > 0 && (
           <HStack
             w="100%"
@@ -253,24 +270,28 @@ function Notes({ currentUser, handleAuth }) {
           </HStack>
         )}
         {sortedList.length === 0 && pinnedList.length > 0 && (
-        <Wrap w="78vw" marginBottom="3vh" spacing='1vh' justify="center">
-          <Heading w='100%' size='md'>Pinned</Heading>
-          {pinnedList.map((note) => (
-            <Note
-              note={note}
-              activeTag={activeTag}
-              handleDeleteNote={handleDeleteNote}
-              handleTagClick={handleTagClick}
-              key={note._id}
-              handleCardSelectChange={handleCardSelectChange}
-              handlePinAdd={handlePinAdd}
-              handlePinDelete={handlePinDelete}
-              selectedNotes={selectedNotes}
-            />
-          ))}
-        </Wrap>
-      )}
-      <Heading w='100%' size='md'>Notes</Heading>
+          <Wrap w="78vw" marginBottom="3vh" spacing="1vh" justify="center">
+            <Heading w="100%" size="md">
+              Pinned
+            </Heading>
+            {pinnedList.map((note) => (
+              <Note
+                note={note}
+                activeTag={activeTag}
+                handleDeleteNote={handleDeleteNote}
+                handleTagClick={handleTagClick}
+                key={note._id}
+                handleCardSelectChange={handleCardSelectChange}
+                handlePinAdd={handlePinAdd}
+                handlePinDelete={handlePinDelete}
+                selectedNotes={selectedNotes}
+              />
+            ))}
+          </Wrap>
+        )}
+        <Heading w="100%" size="md">
+          Notes
+        </Heading>
         {sortedList.length > 0
           ? sortedList.map((note) => (
               <Note
@@ -301,13 +322,13 @@ function Notes({ currentUser, handleAuth }) {
                 />
               ))}
         <WrapItem w="100%" display="flex" justifyContent="center">
-            <PlusSquareIcon
-              boxSize={75}
-              color="green.300"
-              _hover={{ color: "green.500" }}
-              marginBottom="3vh"
-              onClick={handleAddNote}
-            />
+          <PlusSquareIcon
+            boxSize={75}
+            color="green.300"
+            _hover={{ color: "green.500" }}
+            marginBottom="3vh"
+            onClick={handleAddNote}
+          />
         </WrapItem>
       </Wrap>
       <Tags

@@ -1,4 +1,10 @@
-import { Heading, Flex, Text, useColorModeValue, SimpleGrid } from "@chakra-ui/react";
+import {
+  Heading,
+  Flex,
+  Text,
+  useColorModeValue,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import Rhymereturn from "./Rhymereturn";
 
 function Rhymebar({
@@ -32,21 +38,57 @@ function Rhymebar({
       top="10vh"
       right="2vw"
     >
-      <SimpleGrid minChildWidth='12.5%' position="relative" top="0">
-        {rhy && rhymes.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Rhymes</Text>}
-        {sdl && soundAlikes.length > 0 && (
-          <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Sound Alikes</Text>
+      <SimpleGrid minChildWidth="12.5%" position="relative" top="0" padding='1vw'>
+        {rhy && rhymes.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Rhymes
+          </Text>
         )}
-        {adj && adjectives.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Adjectives</Text>}
-        {noun && nouns.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Nouns</Text>}
-        {rlwd && words.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Related Words</Text>}
-        {syn && synonyms.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Synonyms</Text>}
-        {ant && antonyms.length > 0 && <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Anotonyms</Text>}
+        {sdl && soundAlikes.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Sound Alikes
+          </Text>
+        )}
+        {adj && adjectives.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Adjectives
+          </Text>
+        )}
+        {noun && nouns.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Nouns
+          </Text>
+        )}
+        {rlwd && words.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Related Words
+          </Text>
+        )}
+        {syn && synonyms.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Synonyms
+          </Text>
+        )}
+        {ant && antonyms.length > 0 && (
+          <Text fontSize="lg" fontStyle="italic">
+            Anotonyms
+          </Text>
+        )}
         {fqfl && freqFollowers.length > 0 && (
-          <Text fontSize="lg" fontStyle='italic' marginBottom='1vh'>Frequent Followers</Text>
+          <Text fontSize="lg" fontStyle="italic">
+            Frequent Followers
+          </Text>
         )}
       </SimpleGrid>
-      <SimpleGrid maxH="70vh" overflowY="auto" bg={bg} rounded="xl" justify="center" minChildWidth='12.5%'>
+      <SimpleGrid
+        maxH="70vh"
+        overflowY="auto"
+        bg={bg}
+        rounded="xl"
+        justify="center"
+        minChildWidth="12.5%"
+        padding='1vw'
+      >
         {rhy && rhymes.length > 0 && (
           <Rhymereturn isLoaded={rhyLoaded} array={rhymes} />
         )}
