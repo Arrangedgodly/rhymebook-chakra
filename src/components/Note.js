@@ -76,6 +76,7 @@ function Note({
         size="md"
         variant="elevated"
         position="relative"
+        boxShadow='lg'
         bg={bg}
       >
         <Icon
@@ -166,10 +167,11 @@ function Note({
         <HStack display="flex" align="center" justify="center" marginTop={1}>
           {note.tags.map((tag) => (
             <Badge
-              variant={activeTag === tag.name ? "solid" : "outline"}
+              variant={activeTag === tag.name ? "solid" : "subtle"}
               colorScheme={tag.color}
               key={tag._id}
               onClick={() => handleTagClick(tag.name)}
+              fontSize='md'
             >
               {tag.name}
             </Badge>

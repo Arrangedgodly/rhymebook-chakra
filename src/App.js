@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Rhymebook from "./components/Rhymebook";
 import Notes from "./components/Notes";
 import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
 import { useState, useEffect } from "react";
 import { login, checkAuth, createUser } from "./utils/api";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -34,6 +35,7 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         handleAuth();
+        navigate('/notes');
       })
       .catch((err) => console.log(err));
   };
@@ -68,10 +70,6 @@ function App() {
     handleAuth();
   }, []);
 
-  useEffect(() => {
-    navigate("/");
-  }, [loggedIn]);
-
   return (
     <div style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
       <Header
@@ -85,7 +83,7 @@ function App() {
               path="/"
               element={
                 loggedIn ? (
-                  <Rhymebook currentUser={currentUser} />
+                  <Rhymebook currentUser={currentUser} handleAuth={handleAuth} />
                 ) : (
                   <Welcome handleButtonClick={handleButtonClick} />
                 )
@@ -93,7 +91,7 @@ function App() {
             />
             <Route
               path="/notes/new"
-              element={<Rhymebook currentUser={currentUser} />}
+              element={<Rhymebook currentUser={currentUser} handleAuth={handleAuth} />}
             />
             <Route
               path="/new-user"
@@ -111,12 +109,18 @@ function App() {
             />
             <Route
               path="/notes/:_id"
-              element={<Rhymebook currentUser={currentUser} />}
+              element={<Rhymebook currentUser={currentUser} handleAuth={handleAuth} />}
             />
             <Route
               path="/profile"
               element={
                 <Profile currentUser={currentUser} handleAuth={handleAuth} />
+              }
+            />
+            <Route
+              path='*'
+              element={
+                <NotFound />
               }
             />
           </Routes>

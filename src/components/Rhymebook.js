@@ -26,7 +26,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-function Rhymebook({ currentUser }) {
+function Rhymebook({ currentUser, handleAuth }) {
   const [activeNote, setActiveNote] = useState({});
   const { _id } = useParams();
   const [title, setTitle] = useState("");
@@ -261,6 +261,12 @@ function Rhymebook({ currentUser }) {
     setTitle(activeNote.title);
     setBody(activeNote.body);
   }, [activeNote]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      handleAuth();
+    }
+  }, []);
 
   return (
     <Flex bg={bg} minH="90vh">

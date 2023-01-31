@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import {
   getNotes,
+  createNote,
   deleteNote,
   addNotePin,
   deleteNotePin,
@@ -82,6 +83,20 @@ function Notes({ currentUser, handleAuth }) {
   const addToast = (title, description, status) => {
     toastIdRef.current = toast({ title, description, status });
   };
+
+  const handleAddNote = () => {
+    addToast(
+      'Adding New Note...',
+      'Adding the new note to your database. Please wait...',
+      'info'
+    );
+    createNote()
+      .then(note => {
+        setNotesList(notesList => [...notesList, note])
+        updateToast('Note successfully added!', '', 'success', '1000', true);
+      })
+      .catch(err => console.log(err))
+  }
 
   const handleDeleteNote = (id) => {
     addToast(
@@ -286,14 +301,13 @@ function Notes({ currentUser, handleAuth }) {
                 />
               ))}
         <WrapItem w="100%" display="flex" justifyContent="center">
-          <Link to="/notes/new">
             <PlusSquareIcon
               boxSize={75}
               color="green.300"
               _hover={{ color: "green.500" }}
               marginBottom="3vh"
+              onClick={handleAddNote}
             />
-          </Link>
         </WrapItem>
       </Wrap>
       <Tags
