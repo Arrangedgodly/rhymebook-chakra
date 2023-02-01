@@ -179,62 +179,59 @@ function Notes({ currentUser, handleAuth }) {
   };
 
   const handleSortNotes = (e) => {
-    if (e.target.value === 'newest' || e.target.value === '') {
-      setSortType('newest');
-    } else if (e.target.value === 'oldest') {
-      setSortType('oldest');
-    } else if (e.target.value ===  'alph') {
-      setSortType('alph');
-    } else if (e.target.value === 'revAlph') {
-      setSortType('revAlph');
-    }
+    setSortType(e.target.value);
   }
 
+  
+
   useEffect(() => {
-    if (sortType === 'newest') {
-      setNotesList(notesList => notesList.sort((a, b) => {
-        if (a.lastEdited > b.lastEdited) {
-          return 1;
-        }
-        if (b.lastEdited > a.lastEdited) {
-          return -1;
-        }
-        return 0;
-      }))
+    const handleSortType = () => {
+      if (sortType === 'newest' | '') {
+        setNotesList(notesList => notesList.sort((a, b) => {
+          if (a.lastEdited > b.lastEdited) {
+            return 1;
+          }
+          if (b.lastEdited > a.lastEdited) {
+            return -1;
+          }
+          return 0;
+        }))
+      }
+      if (sortType === 'oldest') {
+        setNotesList(notesList => notesList.sort((a, b) => {
+          if (a.lastEdited > b.lastEdited) {
+            return -1;
+          }
+          if (b.lastEdited > a.lastEdited) {
+            return 1;
+          }
+          return 0;
+        }))
+      }
+      if (sortType === 'alph') {
+        setNotesList(notesList => notesList.sort((a, b) => {
+          if (a.title > b.title) {
+            return -1;
+          }
+          if (b.title > a.title) {
+            return 1;
+          }
+          return 0;
+        }))
+      }
+      if (sortType === 'revAlph') {
+        setNotesList(notesList => notesList.sort((a, b) => {
+          if (a.title > b.title) {
+            return 1;
+          }
+          if (b.title > a.title) {
+            return -1;
+          }
+          return 0;
+        }))
+      }
     }
-    if (sortType === 'oldest') {
-      setNotesList(notesList => notesList.sort((a, b) => {
-        if (a.lastEdited > b.lastEdited) {
-          return -1;
-        }
-        if (b.lastEdited > a.lastEdited) {
-          return 1;
-        }
-        return 0;
-      }))
-    }
-    if (sortType === 'alph') {
-      setNotesList(notesList => notesList.sort((a, b) => {
-        if (a.title > b.title) {
-          return -1;
-        }
-        if (b.title > a.title) {
-          return 1;
-        }
-        return 0;
-      }))
-    }
-    if (sortType === 'revAlph') {
-      setNotesList(notesList => notesList.sort((a, b) => {
-        if (a.title > b.title) {
-          return 1;
-        }
-        if (b.title > a.title) {
-          return -1;
-        }
-        return 0;
-      }))
-    }
+    handleSortType()
   }, [sortType])
 
   useEffect(() => {
