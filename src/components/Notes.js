@@ -182,57 +182,60 @@ function Notes({ currentUser, handleAuth }) {
     setSortType(e.target.value);
   }
 
-  
+  const handleSortType = () => {
+    if (sortType === 'newest' | '') {
+      setNotesList(notesList.sort((a, b) => {
+        if (a.lastEdited > b.lastEdited) {
+          return 1;
+        }
+        if (b.lastEdited > a.lastEdited) {
+          return -1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'oldest') {
+      setNotesList(notesList.sort((a, b) => {
+        if (a.lastEdited > b.lastEdited) {
+          return -1;
+        }
+        if (b.lastEdited > a.lastEdited) {
+          return 1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'alph') {
+      setNotesList(notesList.sort((a, b) => {
+        if (a.title.toLowerCase() > b.title.toLowerCase()) {
+          return -1;
+        }
+        if (b.title.toLowerCase() > a.title.toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      }))
+    }
+    if (sortType === 'revAlph') {
+      setNotesList(notesList.sort((a, b) => {
+        if (a.title.toLowerCase() > b.title.toLowerCase()) {
+          return 1;
+        }
+        if (b.title.toLowerCase() > a.title.toLowerCase()) {
+          return -1;
+        }
+        return 0;
+      }))
+    }
+  }
 
   useEffect(() => {
-    const handleSortType = () => {
-      if (sortType === 'newest' | '') {
-        setNotesList(notesList => notesList.sort((a, b) => {
-          if (a.lastEdited > b.lastEdited) {
-            return 1;
-          }
-          if (b.lastEdited > a.lastEdited) {
-            return -1;
-          }
-          return 0;
-        }))
-      }
-      if (sortType === 'oldest') {
-        setNotesList(notesList => notesList.sort((a, b) => {
-          if (a.lastEdited > b.lastEdited) {
-            return -1;
-          }
-          if (b.lastEdited > a.lastEdited) {
-            return 1;
-          }
-          return 0;
-        }))
-      }
-      if (sortType === 'alph') {
-        setNotesList(notesList => notesList.sort((a, b) => {
-          if (a.title > b.title) {
-            return -1;
-          }
-          if (b.title > a.title) {
-            return 1;
-          }
-          return 0;
-        }))
-      }
-      if (sortType === 'revAlph') {
-        setNotesList(notesList => notesList.sort((a, b) => {
-          if (a.title > b.title) {
-            return 1;
-          }
-          if (b.title > a.title) {
-            return -1;
-          }
-          return 0;
-        }))
-      }
-    }
     handleSortType()
   }, [sortType])
+
+  useEffect(() => {
+    handleSortType()
+  }, [])
 
   useEffect(() => {
     resetNotes();
