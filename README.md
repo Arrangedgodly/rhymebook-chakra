@@ -4,6 +4,8 @@ The API powered notebook that writes your rhymes (and much more) with you!
 ## Link to the Project
 This project can be found at [Rhymebook](rhymebook.graydonwasil.com)
 
+The repository for the backend can be found at [Rhymebook API](https://github.com/Arrangedgodly/rhymebook-api)
+
 ## About the Project
 Rhymebook is a free notetaking service that functions similar to Google Keep or Evernote with additional features. We utilize the [Datamuse API](https://www.datamuse.com/api/) to find suggested terms based upon user input.
 
