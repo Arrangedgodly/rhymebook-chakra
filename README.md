@@ -39,7 +39,7 @@ Rhymebook is a free notetaking service that functions similar to Google Keep or 
       * Broad - Title inputs slightly affect the output of the API
       * Specific - Title greatly affects the output from the API. Generally you get a maximum of 5 related terms in any category this way when used correctly.
     - Max Query Returns
-      * The max amount of words returned in each category by the API. Capped from 5 - 45
+      * The max amount of words returned in each category by the API. Capped from 5 - 45. Increment in units of 5
 
 
 ## Technologies Utilized
