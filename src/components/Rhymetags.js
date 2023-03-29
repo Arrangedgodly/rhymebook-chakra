@@ -25,7 +25,7 @@ function Rhymetags({ isOpen, onClose, handleAddNoteTag }) {
   };
 
   const handleTagSubmit = (e) => {
-    if (e.key === "Enter") {
+    if ((e.key === "Enter") && (tag !== '')) {
       handleSubmit();
     }
   };
@@ -147,7 +147,7 @@ function Rhymetags({ isOpen, onClose, handleAddNoteTag }) {
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="blue" onClick={handleSubmit}>
+          <Button colorScheme="blue" onClick={handleSubmit} isDisabled={tag === ''}>
             Save
           </Button>
         </DrawerFooter>
