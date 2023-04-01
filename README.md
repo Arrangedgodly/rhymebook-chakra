@@ -2,7 +2,7 @@
 The API powered notebook that writes your rhymes (and much more) with you!
 
 ## Link to the Project
-This project can be found at [Rhymebook](rhymebook.graydonwasil.com)
+This project can be found at [Rhymebook](https://rhymebook.graydonwasil.com)
 
 The repository for the backend can be found at [Rhymebook API](https://github.com/Arrangedgodly/rhymebook-api)
 
