@@ -57,7 +57,7 @@ function Login({ handleLogin }) {
               onChange={handlePasswordChange}
             />
           </FormControl>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit} isDisabled={email === '' || password === ''}>
             Submit
           </Button>
           <p className="Form-subtext">

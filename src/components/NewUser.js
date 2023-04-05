@@ -110,7 +110,7 @@ function NewUser({ handleCreateUser }) {
               Confirmation Password does not match
             </FormErrorMessage>
           </FormControl>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit} isDisabled={name === '' || email === '' || password === '' || confirmPassword === ''}>
             Submit
           </Button>
           <p className="Form-subtext">

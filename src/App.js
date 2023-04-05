@@ -35,7 +35,7 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         handleAuth();
-        navigate('/notes');
+        navigate('/');
       })
       .catch((err) => console.log(err));
   };
